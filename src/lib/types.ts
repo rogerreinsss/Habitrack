@@ -7,6 +7,7 @@ export const CATEGORIES = [
   "Otro",
 ] as const;
 
+
 export type Category = (typeof CATEGORIES)[number];
 
 export const FREQUENCIES = ["daily", "weekdays", "weekend"] as const;
