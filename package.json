@@ -1,0 +1,20 @@
+{
+  "name": "habitrack",
+  "version": "1.0.0",
+  "description": "Habit tracking application",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'No build step required for vanilla HTML/JS'",
+    "test": "echo 'No tests specified'"
+  },
+  "keywords": [
+    "habit-tracker",
+    "productivity"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@vercel/analytics": "^2.0.1"
+  }
+}
