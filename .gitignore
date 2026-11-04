@@ -1,0 +1,22 @@
+node_modules
+.next
+out
+build
+dist
+coverage
+
+# Dependencias y entorno
+.env
+.env.local
+.env.*.local
+
+# Sistema y editores
+.DS_Store
+Thumbs.db
+*.log
+.vscode
+.idea
+
+# Next.js
+next-env.d.ts
+*.tsbuildinfo

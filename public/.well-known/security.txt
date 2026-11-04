@@ -1,0 +1,5 @@
+Contact: mailto:privacidad@habitrack.app
+Expires: 2027-11-04T00:00:00.000Z
+Preferred-Languages: es, en
+Canonical: https://habitrack.app/.well-known/security.txt
+Policy: https://habitrack.app/privacidad#seguridad

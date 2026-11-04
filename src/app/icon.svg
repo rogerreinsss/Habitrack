@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="HabiTrack">
+  <defs>
+    <radialGradient id="bg" cx="30%" cy="20%" r="90%">
+      <stop offset="0" stop-color="#0d0828" />
+      <stop offset="1" stop-color="#030014" />
+    </radialGradient>
+    <linearGradient id="rim" x1="10" y1="54" x2="54" y2="10">
+      <stop stop-color="#e59cff" />
+      <stop offset=".5" stop-color="#ba9cff" />
+      <stop offset="1" stop-color="#9cb2ff" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#bg)" />
+  <circle cx="32" cy="33" r="20" fill="none" stroke="url(#rim)" stroke-width="1.6" opacity=".85" />
+  <path d="M22.5 33.6l6 5.8 12.5-13.2" fill="none" stroke="#f4f1ff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" />
+  <circle cx="47" cy="19" r="2.4" fill="#9382ff" />
+  <circle cx="16" cy="44" r="1.6" fill="#f4f1ff" opacity=".72" />
+</svg>
