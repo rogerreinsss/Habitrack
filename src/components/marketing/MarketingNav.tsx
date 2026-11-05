@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { Brand } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
 import { APP_PATH, NAV_LINKS } from "@/lib/site";
 
 export function MarketingNav() {
   const [open, setOpen] = useState(false);
+  const { user } = useAuth();
+  const accountLabel = user ? "Mi cuenta" : "Iniciar sesión";
 
   useEffect(() => {
     if (!open) return;
@@ -33,6 +36,9 @@ export function MarketingNav() {
         </div>
 
         <div className="nav-actions">
+          <Link href="/login" className="nav-link">
+            {accountLabel}
+          </Link>
           <Link href={APP_PATH} className="btn btn-ghost btn-sm">
             Abrir app
           </Link>
@@ -82,6 +88,14 @@ export function MarketingNav() {
               Empezar gratis
             </Link>
           </div>
+          <Link
+            href="/login"
+            className="nav-mobile-link"
+            onClick={() => setOpen(false)}
+          >
+            {accountLabel}
+            <Icon name="arrowRight" size={16} />
+          </Link>
         </div>
       )}
     </header>

@@ -7,7 +7,8 @@ const columns = [
   {
     title: "Producto",
     links: [
-      { href: APP_PATH, label: "Abrir HabiTrack", external: false },
+      { href: APP_PATH, label: "Abrir Motiveva", external: false },
+      { href: "/login", label: "Iniciar sesión", external: false },
       { href: "/#producto", label: "Cómo funciona", external: false },
       { href: "/#funciones", label: "Funciones", external: false },
       { href: "/#faq", label: "Preguntas frecuentes", external: false },
@@ -31,12 +32,12 @@ export function SiteFooter() {
         <div className="footer-brand">
           <Brand href="/" />
           <p>
-            Un lugar tranquilo para construir constancia. Sin cuentas, sin
-            servidores y sin ruido.
+            Un lugar tranquilo para construir constancia. Sin cuenta
+            obligatoria, sin anuncios y sin ruido.
           </p>
           <span className="footer-local">
             <Icon name="shield" size={14} />
-            100% local · Sin rastreadores
+            Local-first · Cuenta opcional
           </span>
         </div>
 
@@ -61,9 +62,9 @@ export function SiteFooter() {
       </div>
 
       <div className="container footer-bottom">
-        <p>© {new Date().getFullYear()} HabiTrack. Hecho para durar.</p>
+        <p>© {new Date().getFullYear()} Motiveva. Hecho para durar.</p>
         <p className="footer-note">
-          Sin cookies · Sin analítica · Sin anuncios
+          Sin cookies de seguimiento · Sin analítica · Sin anuncios
         </p>
       </div>
     </footer>

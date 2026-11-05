@@ -1,12 +1,12 @@
 import type { HabitData } from "./types";
 import { sanitizeData } from "./validation";
 
-export const STORAGE_KEY = "habitrackv2";
-export const SORT_KEY = "habitrackSort";
-export const LAST_EXPORT_KEY = "habitrackLastExport";
-export const NOTIF_KEY = "habitrackNotif";
-export const REMINDER_KEY = "habitrackReminderTime";
-export const MOTION_KEY = "habitrackMotion";
+export const STORAGE_KEY = "motivevav2";
+export const SORT_KEY = "motivevaSort";
+export const LAST_EXPORT_KEY = "motivevaLastExport";
+export const NOTIF_KEY = "motivevaNotif";
+export const REMINDER_KEY = "motivevaReminderTime";
+export const MOTION_KEY = "motivevaMotion";
 
 /**
  * Returns null only when the user has never stored data (first visit).

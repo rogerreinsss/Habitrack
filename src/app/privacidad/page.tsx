@@ -9,12 +9,12 @@ import { CONTACT_EMAIL, SITE_NAME, SITE_URL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Política de privacidad",
   description:
-    "Cómo trata HabiTrack tus datos: todo se guarda en el almacenamiento local de tu navegador. Sin cuentas, sin servidores, sin cookies de seguimiento.",
+    "Cómo trata Motiveva tus datos: modo local sin cuenta y sincronización opcional con Supabase. Sin cookies de seguimiento ni publicidad.",
   alternates: { canonical: "/privacidad" },
   openGraph: {
-    title: "Política de privacidad · HabiTrack",
+    title: "Política de privacidad · Motiveva",
     description:
-      "Tus hábitos nunca salen de tu dispositivo. Así funciona la privacidad de HabiTrack.",
+      "Tus hábitos, en tu dispositivo o en tu cuenta privada. Así funciona la privacidad de Motiveva.",
     url: "/privacidad",
   },
 };
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
 const SECTIONS = [
   { id: "resumen", label: "Resumen" },
   { id: "responsable", label: "Responsable" },
-  { id: "datos", label: "Datos que no recogemos" },
+  { id: "datos", label: "Datos y cuenta" },
   { id: "local", label: "Datos en tu dispositivo" },
   { id: "base-legal", label: "Base legal" },
   { id: "cookies", label: "Cookies y almacenamiento" },
@@ -55,14 +55,13 @@ export default function PrivacyPage() {
               <span className="gradient-text">privacidad.</span>
             </h1>
             <p className="legal-lede">
-              {SITE_NAME} está diseñada para no necesitar tus datos. Esta página
-              explica, sin rodeos, qué ocurre con la información cuando usas la
-              app.
+              {SITE_NAME} funciona sin cuenta. Si decides crear una, esta página
+              explica, sin rodeos, qué datos se guardan, dónde y para qué.
             </p>
             <div className="legal-meta">
               <span>
                 <Icon name="calendar" size={14} />
-                Última actualización: 4 de noviembre de 2026
+                Última actualización: 5 de noviembre de 2026
               </span>
               <span>
                 <Icon name="globe" size={14} />
@@ -101,16 +100,17 @@ export default function PrivacyPage() {
               <h2 id="resumen-title">01 · Resumen</h2>
               <p>
                 {SITE_NAME} es una aplicación web <strong>local-first</strong>.
-                No hay cuentas, no hay servidor de datos y no hay forma de que
-                el equipo de {SITE_NAME} vea tus hábitos, tu historial o tus
-                estadísticas.
+                Sin cuenta, tus hábitos se guardan únicamente en el
+                almacenamiento de tu navegador. La cuenta es opcional: si la
+                creas, se guarda una copia privada en Supabase para que puedas
+                sincronizar tus hábitos entre dispositivos.
               </p>
               <div className="legal-callout">
                 <Icon name="shield" size={18} />
                 <p>
-                  En una frase: todo lo que escribes y marcas se guarda en el
-                  almacenamiento local de tu navegador y nunca se transmite a
-                  nuestros servidores.
+                  En una frase: sin cuenta, todo se queda en tu navegador. Con
+                  cuenta, tus hábitos viajan a tu espacio privado para
+                  sincronizarse. Nunca los usamos para publicidad.
                 </p>
               </div>
             </section>
@@ -125,25 +125,45 @@ export default function PrivacyPage() {
                 protección de datos.
               </p>
               <p>
-                {SITE_NAME} no trata datos personales en un servidor propio
-                porque no dispone de base de datos de usuarios ni de sistema de
-                registro.
+                Para la cuenta opcional, {SITE_NAME} utiliza Supabase como
+                proveedor de autenticación y base de datos. Supabase actúa como
+                encargado del tratamiento y solo procesa los datos necesarios
+                para prestar el servicio.
               </p>
             </section>
 
             <section id="datos" aria-labelledby="datos-title">
-              <h2 id="datos-title">03 · Datos que no recogemos</h2>
-              <p>No solicitamos ni almacenamos:</p>
+              <h2 id="datos-title">03 · Datos y cuenta</h2>
+              <p>
+                <strong>Sin cuenta</strong> no solicitamos ni almacenamos
+                nombre, correo electrónico, teléfono ni credenciales. Tampoco
+                recogemos direcciones IP con fines analíticos o publicitarios.
+              </p>
+              <p>
+                <strong>Si creas una cuenta</strong>, tratamos los siguientes
+                datos para autenticarte y sincronizar tus hábitos:
+              </p>
               <ul>
-                <li>Nombre, apellidos, correo electrónico o teléfono.</li>
-                <li>Contraseñas ni credenciales de acceso.</li>
-                <li>Dirección IP con fines analíticos o publicitarios.</li>
-                <li>Identificadores de publicidad o de seguimiento.</li>
-                <li>Datos de salud, ubicación, contactos o dispositivo.</li>
+                <li>
+                  <strong>Email</strong> y contraseña. La contraseña se guarda
+                  como hash en Supabase; nunca la vemos en claro.
+                </li>
+                <li>
+                  <strong>Datos de perfil</strong> que devuelve Google si eliges
+                  «Continuar con Google»: nombre, email y foto de perfil.
+                </li>
+                <li>
+                  <strong>Datos de la app</strong>: hábitos, registros,
+                  estadísticas y preferencias que decidas sincronizar.
+                </li>
+                <li>
+                  <strong>Metadatos técnicos</strong>: identificador de usuario,
+                  fechas de creación y actualización de tu copia.
+                </li>
               </ul>
               <p>
-                Tampoco utilizamos cookies de analítica, píxeles de redes
-                sociales, mapas de calor ni herramientas de experimentación.
+                No usamos identificadores publicitarios, no elaboramos perfiles
+                comerciales y no vendemos datos a terceros.
               </p>
             </section>
 
@@ -175,7 +195,13 @@ export default function PrivacyPage() {
                 </li>
               </ul>
               <p>
-                Estos datos no se envían, no se sincronizan y no se comparten.
+                Sin cuenta, estos datos no se envían, no se sincronizan y no se
+                comparten. Si inicias sesión, se guarda una copia del estado de
+                la app en <code>public.motiveva_data</code>, una tabla privada
+                de Supabase protegida con Row Level Security: cada usuario solo
+                puede leer y escribir su propia fila.
+              </p>
+              <p>
                 Si usas la función de exportar, el archivo JSON se genera en tu
                 dispositivo y se descarga directamente.
               </p>
@@ -190,6 +216,13 @@ export default function PrivacyPage() {
                 para elaborar perfiles ni para publicidad.
               </p>
               <p>
+                Si creas una cuenta, la base legal es la ejecución del contrato
+                de servicio: necesitamos tu email para autenticarte y tu espacio
+                privado para sincronizar los hábitos que decidas guardar. La
+                sincronización es opcional y puedes seguir usando el modo local
+                sin cuenta.
+              </p>
+              <p>
                 Cuando activas las notificaciones, el navegador te pide permiso
                 expreso. Ese permiso se puede retirar en cualquier momento
                 desde los ajustes del navegador o de la propia app.
@@ -199,10 +232,12 @@ export default function PrivacyPage() {
             <section id="cookies" aria-labelledby="cookies-title">
               <h2 id="cookies-title">06 · Cookies y almacenamiento</h2>
               <p>
-                {SITE_NAME} no utiliza cookies. Utiliza <code>localStorage</code>{" "}
-                como almacenamiento técnico para conservar tus hábitos entre
-                visitas. Puedes borrarlo desde la app (Ajustes → Resetear todo)
-                o desde la configuración de tu navegador.
+                {SITE_NAME} no utiliza cookies de seguimiento ni de publicidad.
+                Usa <code>localStorage</code> como almacenamiento técnico para
+                conservar tus hábitos entre visitas y, si inicias sesión, para
+                mantener la sesión de Supabase Auth. Puedes borrar los datos
+                locales desde la app (Ajustes → Resetear todo) o desde la
+                configuración de tu navegador.
               </p>
               <p>
                 Las tipografías se sirven desde el propio sitio web, no desde
@@ -224,12 +259,16 @@ export default function PrivacyPage() {
             <section id="terceros" aria-labelledby="terceros-title">
               <h2 id="terceros-title">08 · Servicios de terceros</h2>
               <p>
-                El sitio se aloja en un proveedor de infraestructura web que,
-                como cualquier servidor, puede registrar datos técnicos básicos
-                (por ejemplo, la dirección IP) durante la entrega de la página
-                por motivos de seguridad y funcionamiento. Ese tratamiento es
-                ajeno a {SITE_NAME} y se limita a lo necesario para servir el
-                sitio.
+                El sitio se aloja en Vercel, que puede registrar datos técnicos
+                básicos (por ejemplo, la dirección IP) durante la entrega de la
+                página por motivos de seguridad y funcionamiento.
+              </p>
+              <p>
+                La cuenta opcional y la sincronización usan Supabase
+                (autenticación y base de datos). Si eliges «Continuar con
+                Google», Google interviene en el proceso de inicio de sesión y
+                nos devuelve los datos básicos de tu perfil. Puedes consultar
+                sus propias políticas de privacidad.
               </p>
               <p>
                 No incrustamos vídeos, mapas, botones sociales ni widgets de
@@ -239,9 +278,7 @@ export default function PrivacyPage() {
 
             <section id="seguridad" aria-labelledby="seguridad-title">
               <h2 id="seguridad-title">09 · Seguridad</h2>
-              <p>
-                Aunque no custodiamos tus hábitos, cuidamos la aplicación:
-              </p>
+              <p>Cuidamos la aplicación y los datos que decidas sincronizar:</p>
               <ul>
                 <li>Conexión cifrada mediante HTTPS.</li>
                 <li>
@@ -250,17 +287,23 @@ export default function PrivacyPage() {
                 </li>
                 <li>
                   Saneamiento de todos los datos que se leen de{" "}
-                  <code>localStorage</code> o de un archivo importado, con
-                  límites de tamaño y de número de registros.
+                  <code>localStorage</code>, de la nube o de un archivo
+                  importado, con límites de tamaño y de número de registros.
+                </li>
+                <li>
+                  Row Level Security en Supabase: cada fila de{" "}
+                  <code>motiveva_data</code> solo es accesible por su usuario.
+                </li>
+                <li>
+                  Contraseñas gestionadas por Supabase Auth y nunca almacenadas
+                  en claro por {SITE_NAME}.
                 </li>
                 <li>
                   Cabeceras de seguridad: <code>nosniff</code>, protección
                   contra framing, política de referencia estricta y permisos
                   del navegador desactivados por defecto.
                 </li>
-                <li>
-                  Sin dependencias de seguimiento ni scripts de terceros.
-                </li>
+                <li>Sin dependencias de seguimiento ni scripts publicitarios.</li>
               </ul>
               <p>
                 Ningún sistema es infalible. Si detectas una vulnerabilidad,
@@ -273,14 +316,17 @@ export default function PrivacyPage() {
             <section id="conservacion" aria-labelledby="conservacion-title">
               <h2 id="conservacion-title">10 · Conservación y eliminación</h2>
               <p>
-                Tus datos permanecen en tu navegador hasta que los borras. Al
-                usar «Resetear todo» se eliminan los hábitos, el historial y las
-                preferencias de ese navegador. También desaparecen si borras los
-                datos del sitio o usas una ventana privada.
+                Sin cuenta, tus datos permanecen en tu navegador hasta que los
+                borras. Al usar «Resetear todo» se eliminan los hábitos, el
+                historial y las preferencias de ese navegador. También
+                desaparecen si borras los datos del sitio o usas una ventana
+                privada.
               </p>
               <p>
-                Como no tenemos copia, no podemos recuperar tus datos por ti.
-                Te recomendamos exportar una copia de vez en cuando.
+                Con cuenta, la copia de Supabase permanece mientras la cuenta
+                exista. «Resetear todo» vacía también la copia en la nube. Para
+                eliminar la cuenta completa y todos sus datos, escríbenos a{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
               </p>
             </section>
 
@@ -304,6 +350,11 @@ export default function PrivacyPage() {
                   <strong>Supresión</strong>: elimina hábitos uno a uno o usa
                   «Resetear todo».
                 </li>
+                <li>
+                  <strong>Cuenta</strong>: para eliminar tu cuenta y la copia en
+                  la nube, escríbenos a{" "}
+                  <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
+                </li>
               </ul>
               <p>
                 Si consideras que no hemos atendido correctamente una solicitud,
@@ -315,9 +366,12 @@ export default function PrivacyPage() {
             <section id="menores" aria-labelledby="menores-title">
               <h2 id="menores-title">12 · Menores</h2>
               <p>
-                {SITE_NAME} no está dirigida específicamente a menores ni
-                recoge datos de ellos. Al no existir registro ni transmisión de
-                información, no se crea ningún perfil de usuario.
+                {SITE_NAME} no está dirigida específicamente a menores. Sin
+                cuenta no se recoge ningún dato personal. Si un menor crea una
+                cuenta, debe contar con la autorización de su padre, madre o
+                tutor legal. Para solicitar la eliminación de una cuenta de un
+                menor, escríbenos a{" "}
+                <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>.
               </p>
             </section>
 

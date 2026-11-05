@@ -40,8 +40,8 @@ const FEATURES: {
   },
   {
     icon: "shield",
-    title: "Tus datos, en tu dispositivo",
-    text: "Todo vive en el almacenamiento local de tu navegador. Sin cuentas, sin servidores, sin anuncios.",
+    title: "Tus datos, bajo tu control",
+    text: "Empieza sin cuenta: todo vive en el almacenamiento local de tu navegador. Si quieres, inicia sesión y guarda una copia privada para sincronizar entre dispositivos. Sin anuncios.",
     span: "span-2",
   },
   {
@@ -60,7 +60,7 @@ const STEPS = [
   {
     number: "01",
     title: "Abre la app",
-    text: "Sin registro, sin correo, sin contraseña. La primera vez encontrarás cuatro hábitos de ejemplo para probar.",
+    text: "Sin registro obligatorio: abre, prueba y decide después. La primera vez encontrarás cuatro hábitos de ejemplo.",
   },
   {
     number: "02",
@@ -70,7 +70,7 @@ const STEPS = [
   {
     number: "03",
     title: "Vuelve mañana",
-    text: "Marca, respira y cierra. La constancia no es intensidad: es volver. HabiTrack solo te recuerda quién quieres ser.",
+    text: "Marca, respira y cierra. La constancia no es intensidad: es volver. Motiveva solo te recuerda quién quieres ser.",
   },
 ];
 
@@ -78,7 +78,7 @@ const PRIVACY_POINTS = [
   {
     icon: "database" as const,
     title: "Guardado en tu navegador",
-    text: "Cada hábito y cada marca viven en localStorage, en tu propio dispositivo. Nunca salen de ahí.",
+    text: "Sin cuenta, cada hábito y cada marca viven en localStorage, en tu propio dispositivo. Con cuenta, se guarda además una copia privada para sincronizarlos.",
   },
   {
     icon: "eyeOff" as const,
@@ -88,7 +88,7 @@ const PRIVACY_POINTS = [
   {
     icon: "trash" as const,
     title: "Borrar es borrar",
-    text: "Desde Ajustes puedes eliminar todo en un clic. También puedes exportar una copia antes, si quieres.",
+    text: "Desde Ajustes puedes eliminar todo en un clic. Si tienes cuenta, también se vacía la copia en la nube. Puedes exportar una copia antes, si quieres.",
   },
 ];
 
@@ -148,7 +148,7 @@ export default async function HomePage() {
           <div className="container hero-inner">
             <p className="eyebrow">
               <span className="eyebrow-dot" aria-hidden="true" />
-              Local-first · Sin cuentas · Sin ruido
+              Local-first · Cuenta opcional · Sin ruido
             </p>
 
             <h1 className="hero-title" id="hero-title">
@@ -158,9 +158,9 @@ export default async function HomePage() {
             </h1>
 
             <p className="hero-lede">
-              Un seguidor de hábitos que se queda en tu dispositivo. Rachas
-              honestas, estadísticas claras y un lugar tranquilo para volver
-              cada día.
+              Un seguidor de hábitos que vive en tu dispositivo y, si quieres,
+              te sigue entre dispositivos. Rachas honestas, estadísticas claras
+              y un lugar tranquilo para volver cada día.
             </p>
 
             <div className="hero-cta">
@@ -175,10 +175,10 @@ export default async function HomePage() {
 
             <ul className="hero-proof">
               <li>
-                <Icon name="check" size={13} /> Sin registro
+                <Icon name="check" size={13} /> Sin registro obligatorio
               </li>
               <li>
-                <Icon name="shield" size={13} /> 100% local
+                <Icon name="shield" size={13} /> Local-first
               </li>
               <li>
                 <Icon name="sparkle" size={13} /> Gratis para siempre
@@ -193,7 +193,7 @@ export default async function HomePage() {
           <div className="container hero-foot">
             <span>Una app, cuatro hábitos de ejemplo y todo el tiempo del mundo.</span>
             <Link href={APP_PATH} className="text-link">
-              Abrir HabiTrack
+              Abrir Motiveva
               <Icon name="arrowUpRight" size={13} />
             </Link>
           </div>
@@ -212,7 +212,7 @@ export default async function HomePage() {
                 <span className="muted-title">Nada que te distraiga.</span>
               </h2>
               <p className="section-lede">
-                HabiTrack no intenta convertirte en otra persona. Te ayuda a
+                Motiveva no intenta convertirte en otra persona. Te ayuda a
                 sostener lo que ya decidiste, con la menor fricción posible.
               </p>
             </div>
@@ -273,7 +273,7 @@ export default async function HomePage() {
                   Es <span className="gradient-text">volver</span>.
                 </p>
               </blockquote>
-              <figcaption>El principio detrás de cada pantalla de HabiTrack.</figcaption>
+              <figcaption>El principio detrás de cada pantalla de Motiveva.</figcaption>
             </figure>
           </div>
         </section>
@@ -292,8 +292,9 @@ export default async function HomePage() {
                   <span className="gradient-text">datos nuestros.</span>
                 </h2>
                 <p className="section-lede">
-                  No hay backend, no hay cuentas y no hay forma de que veamos
-                  lo que marcas. HabiTrack funciona entera en tu navegador.
+                  Sin cuenta, Motiveva funciona entera en tu navegador. Si
+                  decides crear una, tus hábitos se guardan en tu espacio
+                  privado para sincronizarlos. Nunca los usamos para publicidad.
                 </p>
                 <Link href="/privacidad" className="btn btn-ghost">
                   Leer la política de privacidad
@@ -350,12 +351,12 @@ export default async function HomePage() {
               <span className="gradient-text">pequeño.</span>
             </h2>
             <p className="final-lede">
-              Un hábito. Un día. Sin registro ni tarjeta. Tus datos se quedan
-              contigo desde el primer clic.
+              Un hábito. Un día. Sin registro obligatorio ni tarjeta. Tus datos
+              se quedan contigo desde el primer clic.
             </p>
             <div className="hero-cta">
               <Link href={APP_PATH} className="btn btn-primary btn-lg">
-                Abrir HabiTrack
+                Abrir Motiveva
                 <Icon name="arrowRight" size={16} />
               </Link>
               <Link href="/privacidad" className="btn btn-ghost btn-lg">

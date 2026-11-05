@@ -7,10 +7,10 @@ import { SITE_DESCRIPTION } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Abrir la app",
   description:
-    "Abre HabiTrack y empieza a seguir tus hábitos. Todo se guarda en tu dispositivo: sin cuentas, sin servidores y sin anuncios.",
+    "Abre Motiveva y empieza a seguir tus hábitos. Funciona sin cuenta en tu dispositivo y, si quieres, sincroniza tus datos entre dispositivos.",
   alternates: { canonical: "/app" },
   openGraph: {
-    title: "HabiTrack — Tu mejor versión, sin ruido",
+    title: "Motiveva — Tu mejor versión, sin ruido",
     description: SITE_DESCRIPTION,
     url: "/app",
   },

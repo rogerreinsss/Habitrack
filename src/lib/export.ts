@@ -4,7 +4,7 @@ import { normalizeImport } from "./validation";
 
 export function buildExportPayload(data: HabitData) {
   return {
-    app: "HabiTrack",
+    app: "Motiveva",
     version: 3,
     exportedAt: new Date().toISOString(),
     habits: data.habits,
@@ -20,7 +20,7 @@ export function downloadExport(data: HabitData): string {
   const anchor = document.createElement("a");
 
   anchor.href = url;
-  anchor.download = `habitrack-${dateKey(new Date())}.json`;
+  anchor.download = `motiveva-${dateKey(new Date())}.json`;
   anchor.rel = "noopener";
   document.body.appendChild(anchor);
   anchor.click();
@@ -76,5 +76,5 @@ export function mergeData(current: HabitData, incoming: HabitData): HabitData {
 }
 
 export function createBackupName(): string {
-  return `habitrack-${todayKey()}.json`;
+  return `motiveva-${todayKey()}.json`;
 }

@@ -17,7 +17,16 @@ function buildCsp(nonce: string): string {
     ...(isDev ? ["'unsafe-eval'"] : []),
   ];
 
-  const connectSrc = ["'self'", ...(isDev ? ["ws:", "wss:"] : [])];
+  const connectSrc = [
+    "'self'",
+    ...(process.env.NEXT_PUBLIC_SUPABASE_URL
+      ? [
+          process.env.NEXT_PUBLIC_SUPABASE_URL,
+          process.env.NEXT_PUBLIC_SUPABASE_URL.replace(/^https:/, "wss:"),
+        ]
+      : []),
+    ...(isDev ? ["ws:", "wss:"] : []),
+  ];
 
   return [
     "default-src 'self'",

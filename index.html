@@ -6,7 +6,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="default" />
   <meta name="theme-color" content="#4f46e5" />
-  <title>HabiTrack</title>
+  <title>Motiveva</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -1420,7 +1420,7 @@ button.streak-row:last-child { border-bottom:none; }
     <div class="logo-wrap">
       <div class="logo-icon"><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg></div>
       <div>
-        <div class="logo-name">HabiTrack</div>
+        <div class="logo-name">Motiveva</div>
         <div class="logo-sub">Tu mejor versión</div>
       </div>
     </div>
@@ -1608,7 +1608,7 @@ button.streak-row:last-child { border-bottom:none; }
           </div>
           <div class="settings-card">
             <div class="settings-row" style="flex-direction:column;align-items:flex-start;gap:.5rem;min-height:unset;">
-              <div class="s-label">HabiTrack</div>
+              <div class="s-label">Motiveva</div>
               <div class="s-sub">100% local · Sin servidores · Datos en localStorage</div>
             </div>
           </div>
@@ -1800,9 +1800,9 @@ button.streak-row:last-child { border-bottom:none; }
 
 <script>
 /* ═══════════════════════════════════════════════
-   HabiTrack — Mobile-first v3
+   Motiveva — Mobile-first v3
 ═══════════════════════════════════════════════ */
-const STORAGE_KEY = 'habitrackv2';
+const STORAGE_KEY = 'motivevav2';
 const dateKey = d => {
   const y = d.getFullYear();
   const m = String(d.getMonth()+1).padStart(2,'0');
@@ -1826,7 +1826,7 @@ let histId  = null;
 let calYear = 0;
 let calMonth = 0;
 let habitSearch = '';
-let habitSort = localStorage.getItem('habitrackSort') || 'recent';
+let habitSort = localStorage.getItem('motivevaSort') || 'recent';
 let pendingImport = null;
 let commandActions = [];
 let commandIndex = 0;
@@ -1975,7 +1975,7 @@ function updateSettingsStats() {
   const archived=data.habits.length-active;
   const rec=Object.values(data.logs).reduce((a,d)=>a+Object.keys(d).length,0);
   info.textContent=`${kb} KB · ${plural(active,'activo','activos')}${archived?` · ${plural(archived,'archivado','archivados')}`:''} · ${plural(rec,'registro','registros')}`;
-  const last=localStorage.getItem('habitrackLastExport');
+  const last=localStorage.getItem('motivevaLastExport');
   document.getElementById('last-export').textContent=last
     ? new Date(last).toLocaleString('es-ES',{day:'numeric',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'})
     : 'Nunca';
@@ -2513,7 +2513,7 @@ function closeCommand() {
 function normalizeImport(raw) {
   const obj=raw&&raw.data&&Array.isArray(raw.data.habits)?raw.data:raw;
   if(!obj||!Array.isArray(obj.habits)||!obj.logs||typeof obj.logs!=='object'||Array.isArray(obj.logs)){
-    throw new Error('El archivo no tiene el formato de HabiTrack.');
+    throw new Error('El archivo no tiene el formato de Motiveva.');
   }
   const validCats=['Salud','Mente','Social','Trabajo','Fitness','Otro'];
   const validFreq=['daily','weekdays','weekend'];
@@ -2611,7 +2611,7 @@ function applyImport(mode) {
 
 function exportData() {
   const payload={
-    app:'HabiTrack',
+    app:'Motiveva',
     version:3,
     exportedAt:new Date().toISOString(),
     habits:data.habits,
@@ -2621,12 +2621,12 @@ function exportData() {
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
   a.href=url;
-  a.download=`habitrack-${today()}.json`;
+  a.download=`motiveva-${today()}.json`;
   document.body.appendChild(a);
   a.click();
   a.remove();
   setTimeout(()=>URL.revokeObjectURL(url),1000);
-  localStorage.setItem('habitrackLastExport',new Date().toISOString());
+  localStorage.setItem('motivevaLastExport',new Date().toISOString());
   updateSettingsStats();
   toast('Datos exportados ⬇️','success');
 }
@@ -2640,7 +2640,7 @@ function scheduleNotif(time) {
   clearTimeout(window._notifT);
   window._notifT=setTimeout(()=>{
     const th=activeHabits().filter(schedToday);
-    new Notification('HabiTrack ✨',{body:`${th.filter(h=>isDone(h.id,today())).length}/${th.length} hábitos completados hoy.`});
+    new Notification('Motiveva ✨',{body:`${th.filter(h=>isDone(h.id,today())).length}/${th.length} hábitos completados hoy.`});
     scheduleNotif(time);
   },next-now);
 }
@@ -2649,7 +2649,7 @@ function scheduleNotif(time) {
 function applyTheme(dark) {
   document.documentElement.setAttribute('data-theme',dark?'dark':'light');
   document.getElementById('dark-toggle').checked=dark;
-  localStorage.setItem('habitrackTheme',dark?'dark':'light');
+  localStorage.setItem('motivevaTheme',dark?'dark':'light');
 }
 
 // ── Events ─────────────────────────────────────
@@ -2698,7 +2698,7 @@ document.getElementById('habit-search').addEventListener('input',function(){
 });
 document.getElementById('habit-sort').addEventListener('change',function(){
   habitSort=this.value;
-  localStorage.setItem('habitrackSort',habitSort);
+  localStorage.setItem('motivevaSort',habitSort);
   renderHabits();
 });
 
@@ -2829,16 +2829,16 @@ document.getElementById('notif-toggle').addEventListener('change',async function
     const p=await Notification.requestPermission();
     if(p!=='granted'){toast('Permiso denegado','warning');this.checked=false;return;}
     scheduleNotif(document.getElementById('reminder-time').value);
-    localStorage.setItem('habitrackNotif','1');
+    localStorage.setItem('motivevaNotif','1');
     toast('Notificaciones activadas ✅','success');
   } else {
-    clearTimeout(window._notifT); localStorage.removeItem('habitrackNotif');
+    clearTimeout(window._notifT); localStorage.removeItem('motivevaNotif');
     toast('Notificaciones desactivadas','info');
   }
 });
 document.getElementById('reminder-time').addEventListener('change',function(){
-  localStorage.setItem('habitrackReminderTime',this.value);
-  if(localStorage.getItem('habitrackNotif'))scheduleNotif(this.value);
+  localStorage.setItem('motivevaReminderTime',this.value);
+  if(localStorage.getItem('motivevaNotif'))scheduleNotif(this.value);
 });
 document.getElementById('export-btn').addEventListener('click',exportData);
 document.getElementById('reset-btn').addEventListener('click',()=>{
@@ -2857,11 +2857,11 @@ document.getElementById('reset-btn').addEventListener('click',()=>{
 
 // ── Init ────────────────────────────────────────
 (function init(){
-  const saved=localStorage.getItem('habitrackTheme');
+  const saved=localStorage.getItem('motivevaTheme');
   applyTheme(saved==='dark'||(!saved&&matchMedia('(prefers-color-scheme:dark)').matches));
-  const rt=localStorage.getItem('habitrackReminderTime');
+  const rt=localStorage.getItem('motivevaReminderTime');
   if(rt)document.getElementById('reminder-time').value=rt;
-  if(localStorage.getItem('habitrackNotif') && ('Notification' in window) && Notification.permission==='granted'){
+  if(localStorage.getItem('motivevaNotif') && ('Notification' in window) && Notification.permission==='granted'){
     document.getElementById('notif-toggle').checked=true;
     scheduleNotif(document.getElementById('reminder-time').value);
   }

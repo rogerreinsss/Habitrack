@@ -25,7 +25,7 @@ export function ProductPreview() {
     <div
       className="preview-shell"
       role="img"
-      aria-label="Vista previa de HabiTrack: panel con progreso diario del 72%, cuatro hábitos, rachas y un mapa de calor de constancia."
+      aria-label="Vista previa de Motiveva: panel con progreso diario del 72%, cuatro hábitos, rachas y un mapa de calor de constancia."
     >
       <div className="preview-bar">
         <span className="preview-dots" aria-hidden="true">
@@ -33,7 +33,7 @@ export function ProductPreview() {
           <i />
           <i />
         </span>
-        <span className="preview-url">habitrack.app/app</span>
+        <span className="preview-url">motiveva.vercel.app/app</span>
         <span className="preview-secure">
           <Icon name="lock" size={11} /> local
         </span>

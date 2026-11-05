@@ -13,16 +13,16 @@ function safeUrl(value: string | undefined, fallback: string): string {
 
 export const SITE_URL = safeUrl(
   process.env.NEXT_PUBLIC_SITE_URL,
-  "https://habitrack.app",
+  "https://motiveva.vercel.app",
 );
 
 export const CONTACT_EMAIL =
-  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "privacidad@habitrack.app";
+  process.env.NEXT_PUBLIC_CONTACT_EMAIL || "privacidad@motiveva.app";
 
-export const SITE_NAME = "HabiTrack";
+export const SITE_NAME = "Motiveva";
 export const SITE_TAGLINE = "Tu mejor versión, sin ruido";
 export const SITE_DESCRIPTION =
-  "HabiTrack es un seguidor de hábitos local-first: rachas, estadísticas, historial y recordatorios. Sin cuentas, sin servidores y sin anuncios. Tus datos se quedan en tu dispositivo.";
+  "Motiveva es un seguidor de hábitos local-first con rachas, estadísticas, historial y recordatorios. Funciona sin cuenta y, si quieres, sincroniza tus hábitos entre dispositivos. Sin anuncios.";
 
 export const APP_PATH = "/app";
 

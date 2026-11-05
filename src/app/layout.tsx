@@ -8,12 +8,14 @@ import {
   SITE_TAGLINE,
   SITE_URL,
 } from "@/lib/site";
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import "./globals.css";
 import "./marketing.css";
 import "./legal.css";
 import "./app.css";
 import "./app-stats.css";
 import "./modals.css";
+import "./auth.css";
 
 const display = DM_Sans({
   subsets: ["latin"],
@@ -75,6 +77,9 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
     },
   },
+  verification: {
+    google: "QaST_y4DFQu2vdVOE7IPA02zdTGDhJytALP1D1KKjbs",
+  },
   icons: {
     icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
     apple: [{ url: "/apple-icon", sizes: "180x180" }],
@@ -126,7 +131,7 @@ export default async function RootLayout({
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>
-        {children}
+        <AuthProvider>{children}</AuthProvider>
         <script
           type="application/ld+json"
           nonce={nonce}

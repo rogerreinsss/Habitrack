@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useAuth } from "@/components/auth/AuthProvider";
 import { useHabits } from "@/components/app/HabitProvider";
 import { useToast } from "@/components/app/ToastProvider";
 import { Toggle } from "@/components/app/Common";
@@ -26,7 +27,9 @@ interface SettingsViewProps {
 }
 
 export function SettingsView({ onImport }: SettingsViewProps) {
-  const { data, lastExport, storageError, exportAll, resetAll } = useHabits();
+  const { data, lastExport, storageError, exportAll, resetAll, syncStatus } =
+    useHabits();
+  const { user, configured, signOut } = useAuth();
   const { toast } = useToast();
   const [notifications, setNotifications] = useState(false);
   const [reminder, setReminder] = useState(DEFAULT_REMINDER);
@@ -79,10 +82,10 @@ export function SettingsView({ onImport }: SettingsViewProps) {
 
       timer = window.setTimeout(() => {
         const progress = todayProgress(data);
-        new Notification("HabiTrack · Tu mejor versión", {
+        new Notification("Motiveva · Tu mejor versión", {
           body: `${progress.completed}/${progress.scheduled} hábitos completados hoy.`,
           icon: "/icon.svg",
-          tag: "habitrack-daily",
+          tag: "motiveva-daily",
         });
         schedule();
       }, Math.max(1000, next.getTime() - Date.now()));
@@ -135,6 +138,15 @@ export function SettingsView({ onImport }: SettingsViewProps) {
   const archivedCount = data.habits.length - active.length;
   const sizeKb = storageSizeKb(data).toFixed(1);
   const records = countRecords(data);
+  const syncLabel = !user
+    ? "Solo en este dispositivo"
+    : syncStatus === "synced"
+      ? "Sincronizado en la nube"
+      : syncStatus === "syncing"
+        ? "Sincronizando cambios…"
+        : syncStatus === "error"
+          ? "No se pudo sincronizar. Tus datos siguen en este dispositivo."
+          : "Cuenta conectada";
 
   return (
     <div className="view settings-view">
@@ -149,6 +161,70 @@ export function SettingsView({ onImport }: SettingsViewProps) {
           </span>
         </div>
       )}
+
+      <section className="settings-card">
+        <div className="settings-head">
+          <span className="panel-icon">
+            <Icon name="globe" size={16} />
+          </span>
+          <h2 className="settings-title">Cuenta y sincronización</h2>
+        </div>
+
+        {!configured ? (
+          <div className="settings-row">
+            <div className="settings-copy">
+              <span className="s-label">Sincronización no disponible</span>
+              <span className="s-sub">
+                La autenticación no está configurada en este entorno. Motiveva
+                sigue funcionando en local.
+              </span>
+            </div>
+          </div>
+        ) : user ? (
+          <>
+            <div className="settings-row">
+              <div className="settings-copy">
+                <span className="s-label">{user.email}</span>
+                <span className="s-sub">{syncLabel}</span>
+              </div>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => void signOut()}
+              >
+                Cerrar sesión
+              </button>
+            </div>
+
+            <div className="settings-row">
+              <div className="settings-copy">
+                <span className="s-label">Copia en la nube</span>
+                <span className="s-sub">
+                  Tus cambios se guardan en tu cuenta privada y se cargan al
+                  iniciar sesión en otro dispositivo.
+                </span>
+              </div>
+              <span
+                className={`status-dot ${syncStatus === "error" ? "is-error" : ""}`}
+                title={syncLabel}
+              />
+            </div>
+          </>
+        ) : (
+          <div className="settings-row">
+            <div className="settings-copy">
+              <span className="s-label">Sincroniza entre dispositivos</span>
+              <span className="s-sub">
+                Crea una cuenta o inicia sesión. Sin cuenta, Motiveva sigue
+                funcionando solo en este navegador.
+              </span>
+            </div>
+            <Link href="/login" className="btn btn-primary">
+              Iniciar sesión
+            </Link>
+          </div>
+        )}
+      </section>
 
       <section className="settings-card">
         <div className="settings-head">
@@ -251,7 +327,9 @@ export function SettingsView({ onImport }: SettingsViewProps) {
           <div className="settings-copy">
             <span className="s-label">Resetear todo</span>
             <span className="s-sub">
-              Elimina hábitos, historial y preferencias de este dispositivo.
+              {user
+                ? "Elimina hábitos, historial y preferencias de este dispositivo y de tu cuenta."
+                : "Elimina hábitos, historial y preferencias de este dispositivo."}
             </span>
           </div>
 
@@ -361,16 +439,17 @@ export function SettingsView({ onImport }: SettingsViewProps) {
         <div>
           <h2 className="s-label">Privacidad por diseño</h2>
           <p className="s-sub">
-            Todo se guarda en el almacenamiento local de tu navegador. No hay
-            cuentas, cookies de seguimiento ni servidores que reciban tus
-            hábitos.{" "}
+            Sin cuenta, todo se guarda en el almacenamiento local de tu
+            navegador. Si inicias sesión, tus hábitos se guardan en una copia
+            privada para sincronizarlos entre dispositivos. No hay cookies de
+            seguimiento ni publicidad.{" "}
             <Link href="/privacidad" className="text-link">
               Leer la política de privacidad
               <Icon name="arrowUpRight" size={13} />
             </Link>
           </p>
           <p className="s-sub settings-version">
-            HabiTrack · versión 1.0 · local-first
+            Motiveva · versión 1.0 · local-first con cuenta opcional
           </p>
         </div>
       </section>

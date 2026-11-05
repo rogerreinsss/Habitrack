@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 
 export const alt =
-  "HabiTrack — Tu mejor versión, sin ruido. Seguidor de hábitos local-first.";
+  "Motiveva — Tu mejor versión, sin ruido. Seguidor de hábitos local-first.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -93,7 +93,7 @@ export default function OpenGraphImage() {
             }}
           >
             <div style={{ fontSize: 26, fontWeight: 500, letterSpacing: -0.4 }}>
-              HabiTrack
+              Motiveva
             </div>
             <div style={{ fontSize: 15, color: "#8b84ad", letterSpacing: 0.4 }}>
               Tu mejor versión
@@ -123,13 +123,12 @@ export default function OpenGraphImage() {
               maxWidth: 760,
             }}
           >
-            Rachas honestas, estadísticas claras y tus datos siempre en tu
-            dispositivo.
+            Rachas honestas, estadísticas claras y tus datos bajo tu control.
           </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          {["Local-first", "Sin cuentas", "Sin anuncios", "Gratis"].map(
+          {["Local-first", "Cuenta opcional", "Sin anuncios", "Gratis"].map(
             (chip) => (
               <div
                 key={chip}
@@ -157,7 +156,7 @@ export default function OpenGraphImage() {
               letterSpacing: 0.5,
             }}
           >
-            habitrack.app
+            motiveva.vercel.app
           </div>
         </div>
       </div>

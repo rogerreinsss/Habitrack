@@ -45,7 +45,7 @@ export function Brand({
       </span>
       {!compact && (
         <span className="brand-text">
-          <span className="brand-name">HabiTrack</span>
+          <span className="brand-name">Motiveva</span>
           {subtitle && <span className="brand-sub">Tu mejor versión</span>}
         </span>
       )}
@@ -56,7 +56,7 @@ export function Brand({
     return <span className={`brand ${className}`}>{content}</span>;
   }
 
-  const accessibleSuffix = compact ? "HabiTrack, inicio" : "Inicio";
+  const accessibleSuffix = compact ? "Motiveva, inicio" : "Inicio";
 
   return (
     <Link href={href} className={`brand ${className}`}>

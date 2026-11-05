@@ -157,12 +157,12 @@ export function sanitizeData(input: unknown): HabitData {
 export function normalizeImport(raw: unknown): HabitData {
   const outer = asRecord(raw);
   if (!outer) {
-    throw new Error("El archivo no tiene el formato de HabiTrack.");
+    throw new Error("El archivo no tiene el formato de Motiveva.");
   }
 
   const payload = asRecord(outer.data) ?? outer;
   if (!Array.isArray(payload.habits) || !asRecord(payload.logs)) {
-    throw new Error("El archivo no tiene el formato de HabiTrack.");
+    throw new Error("El archivo no tiene el formato de Motiveva.");
   }
 
   const data = sanitizeData(payload);
