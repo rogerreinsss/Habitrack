@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { Brand } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { APP_PATH, NAV_LINKS } from "@/lib/site";
 
 export function MarketingNav() {
@@ -36,6 +37,7 @@ export function MarketingNav() {
         </div>
 
         <div className="nav-actions">
+          <ThemeToggle />
           <Link href="/login" className="nav-link">
             {accountLabel}
           </Link>
@@ -72,6 +74,10 @@ export function MarketingNav() {
               <Icon name="chevronRight" size={16} />
             </Link>
           ))}
+          <div className="nav-mobile-theme">
+            <span>Tema</span>
+            <ThemeToggle />
+          </div>
           <div className="nav-mobile-actions">
             <Link
               href={APP_PATH}

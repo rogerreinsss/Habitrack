@@ -6,7 +6,8 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { useHabits } from "@/components/app/HabitProvider";
 import { useToast } from "@/components/app/ToastProvider";
 import { Toggle } from "@/components/app/Common";
-import { Icon } from "@/components/ui/Icon";
+import { useTheme, type ThemeMode } from "@/components/ThemeProvider";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { activeHabits, todayProgress } from "@/lib/habits";
 import { formatDateTime, plural } from "@/lib/date";
 import { countRecords } from "@/lib/export";
@@ -22,6 +23,12 @@ import {
 
 const DEFAULT_REMINDER = "09:00";
 
+const THEME_OPTIONS: { value: ThemeMode; label: string; icon: IconName }[] = [
+  { value: "light", label: "Claro", icon: "sun" },
+  { value: "dark", label: "Oscuro", icon: "moon" },
+  { value: "system", label: "Sistema", icon: "monitor" },
+];
+
 interface SettingsViewProps {
   onImport: () => void;
 }
@@ -31,6 +38,7 @@ export function SettingsView({ onImport }: SettingsViewProps) {
     useHabits();
   const { user, configured, signOut } = useAuth();
   const { toast } = useToast();
+  const { mode: themeMode, setMode: setThemeMode } = useTheme();
   const [notifications, setNotifications] = useState(false);
   const [reminder, setReminder] = useState(DEFAULT_REMINDER);
   const [reducedMotion, setReducedMotion] = useState(false);
@@ -265,6 +273,45 @@ export function SettingsView({ onImport }: SettingsViewProps) {
             onChange={(event) => changeReminder(event.target.value)}
             aria-label="Hora del recordatorio"
           />
+        </div>
+      </section>
+
+      <section className="settings-card">
+        <div className="settings-head">
+          <span className="panel-icon">
+            <Icon name="sun" size={16} />
+          </span>
+          <h2 className="settings-title">Apariencia</h2>
+        </div>
+
+        <div className="settings-row settings-row-theme">
+          <div className="settings-copy">
+            <span className="s-label">Tema de la interfaz</span>
+            <span className="s-sub">
+              Elige un tema claro u oscuro, o sigue la configuración de tu
+              dispositivo.
+            </span>
+          </div>
+          <div
+            className="theme-options"
+            role="group"
+            aria-label="Tema de la interfaz"
+          >
+            {THEME_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                type="button"
+                className={`theme-option${
+                  themeMode === option.value ? " is-active" : ""
+                }`}
+                aria-pressed={themeMode === option.value}
+                onClick={() => setThemeMode(option.value)}
+              >
+                <Icon name={option.icon} size={15} />
+                <span>{option.label}</span>
+              </button>
+            ))}
+          </div>
         </div>
       </section>
 

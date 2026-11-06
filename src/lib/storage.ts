@@ -7,6 +7,7 @@ export const LAST_EXPORT_KEY = "motivevaLastExport";
 export const NOTIF_KEY = "motivevaNotif";
 export const REMINDER_KEY = "motivevaReminderTime";
 export const MOTION_KEY = "motivevaMotion";
+export const THEME_KEY = "motivevaTheme";
 
 /**
  * Returns null only when the user has never stored data (first visit).

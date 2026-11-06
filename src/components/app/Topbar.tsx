@@ -3,6 +3,7 @@
 import { useHabits } from "@/components/app/HabitProvider";
 import { Brand } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { activeHabits, todayProgress } from "@/lib/habits";
 import { formatLongDate } from "@/lib/date";
 import type { View } from "@/lib/types";
@@ -47,6 +48,7 @@ export function Topbar({ view, onSearch, onNew }: TopbarProps) {
       </div>
 
       <div className="topbar-actions">
+        <ThemeToggle />
         <button
           type="button"
           className="btn btn-ghost topbar-search"

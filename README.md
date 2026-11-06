@@ -1,6 +1,6 @@
 # Motiveva
 
-Seguidor de hábitos **local-first** con una interfaz cosmos oscura. Funciona sin cuenta y, si el usuario lo decide, sincroniza sus hábitos entre dispositivos con Supabase Auth. Sin anuncios ni analítica.
+Seguidor de hábitos **local-first** con una interfaz botánica clara y oscura. Funciona sin cuenta y, si el usuario lo decide, sincroniza sus hábitos entre dispositivos con Supabase Auth. Sin anuncios ni analítica.
 
 Este repositorio contiene la versión Next.js del proyecto. El archivo `index.html` de la raíz es la versión original en HTML/CSS/JS y se conserva como referencia.
 
@@ -84,7 +84,7 @@ El proveedor de Google se configura en Supabase Auth → Providers → Google. E
 
 ## Datos y privacidad
 
-- Sin cuenta, los hábitos, registros y preferencias viven en `localStorage` bajo la clave `motivevav2`.
+- Sin cuenta, los hábitos, registros y preferencias viven en `localStorage` bajo la clave `motivevav2`. El tema elegido (claro, oscuro o sistema) se guarda aparte bajo la clave `motivevaTheme`.
 - Con cuenta, además se guarda un snapshot JSONB privado en `public.motiveva_data`, protegido con RLS: cada usuario solo puede leer y escribir su propia fila.
 - No hay cookies de analítica, píxeles ni publicidad. La autenticación opcional usa Supabase y el sitio se aloja en Vercel.
 - Exportar descarga un JSON con hábitos e historial. Importar acepta ese mismo formato, con validación estricta, límite de 3 MB y protección contra claves peligrosas.
@@ -135,7 +135,7 @@ Define `NEXT_PUBLIC_SITE_URL` con el dominio final para que canonical, sitemap y
 
 ## Accesibilidad
 
-- Tema oscuro único, foco visible y enlace «Saltar al contenido».
+- Tema claro, oscuro o automático según el sistema, con preferencia persistente y sin destello al cargar. Foco visible y enlace «Saltar al contenido».
 - Modales con trampa de foco, cierre con `Escape` y restauración del foco.
 - Preferencia «Reducir movimiento» que desactiva transiciones y animaciones, además de respetar `prefers-reduced-motion`.
 - Atajos de teclado: `Ctrl/Cmd + K` para la paleta, `N` nuevo hábito, `T` hoy, `H` hábitos, `S` estadísticas y `,` ajustes.

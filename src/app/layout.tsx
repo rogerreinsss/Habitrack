@@ -9,6 +9,7 @@ import {
   SITE_URL,
 } from "@/lib/site";
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { ThemeProvider } from "@/components/ThemeProvider";
 import "./globals.css";
 import "./marketing.css";
 import "./legal.css";
@@ -16,6 +17,7 @@ import "./app.css";
 import "./app-stats.css";
 import "./modals.css";
 import "./auth.css";
+import "./theme.css";
 
 const display = Manrope({
   subsets: ["latin"],
@@ -100,9 +102,16 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  colorScheme: "light",
+  colorScheme: "light dark",
   themeColor: "#F5F4ED",
 };
+
+/**
+ * Runs before the rest of the document paints so a stored dark preference is
+ * applied without a flash of light content. Missing/invalid values follow the
+ * operating system preference.
+ */
+const themeInitScript = `(function(){try{var stored=localStorage.getItem("motivevaTheme");var mode=stored==="light"||stored==="dark"?stored:(window.matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light");var root=document.documentElement;root.dataset.theme=mode;root.style.colorScheme=mode;}catch(error){}})();`;
 
 export default async function RootLayout({
   children,
@@ -126,12 +135,22 @@ export default async function RootLayout({
   };
 
   return (
-    <html lang="es" className={`${display.variable} ${body.variable}`}>
+    <html
+      lang="es"
+      className={`${display.variable} ${body.variable}`}
+      suppressHydrationWarning
+    >
       <body>
+        <script
+          nonce={nonce}
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
+        />
         <a className="skip-link" href="#contenido">
           Saltar al contenido
         </a>
-        <AuthProvider>{children}</AuthProvider>
+        <ThemeProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </ThemeProvider>
         <script
           type="application/ld+json"
           nonce={nonce}
