@@ -42,9 +42,16 @@ export type IconName =
   | "eyeOff"
   | "sun"
   | "moon"
-  | "monitor";
+  | "monitor"
+  | "user";
 
 const paths: Record<IconName, ReactNode> = {
+  user: (
+    <>
+      <circle cx="12" cy="8" r="4" />
+      <path d="M4 20c0-4 4-6 8-6s8 2 8 6" />
+    </>
+  ),
   today: (
     <>
       <circle cx="12" cy="12" r="4" />

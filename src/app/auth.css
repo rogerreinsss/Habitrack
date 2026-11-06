@@ -551,6 +551,99 @@
   box-shadow: 0 0 0 4px rgba(155, 75, 63, 0.12);
 }
 
+.onboarding-card {
+  width: min(100%, 460px);
+}
+
+.onboarding-progress {
+  margin: 32px 0 8px;
+  color: var(--text-tertiary);
+  font-size: 0.78rem;
+}
+
+.onboarding-dots {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.onboarding-dots span {
+  width: 28px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--border);
+  transition: background 180ms ease;
+}
+
+.onboarding-dots span.is-done {
+  background: var(--lavender);
+}
+
+.onboarding-goals {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.onboarding-goal {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--text-primary);
+  font: 500 0.86rem var(--font-body);
+  cursor: pointer;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.onboarding-goal:hover {
+  border-color: rgba(82, 113, 91, 0.5);
+}
+
+.onboarding-goal.is-selected {
+  border-color: rgba(82, 113, 91, 0.7);
+  background: rgba(82, 113, 91, 0.14);
+}
+
+.onboarding-goal:focus-visible,
+.onboarding-signout:focus-visible {
+  outline: 2px solid rgba(82, 113, 91, 0.6);
+  outline-offset: 2px;
+}
+
+.auth-field textarea.onboarding-textarea {
+  width: 100%;
+  min-height: 84px;
+  padding: 10px 13px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+  color: var(--text-primary);
+  font: 0.9rem var(--font-body);
+  line-height: 1.45;
+  outline: none;
+  resize: vertical;
+  transition: border-color 160ms ease, background 160ms ease;
+}
+
+.auth-field textarea.onboarding-textarea:focus {
+  border-color: rgba(82, 113, 91, 0.5);
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.onboarding-signout {
+  margin-top: 16px;
+  padding: 4px 8px;
+  border: 0;
+  background: transparent;
+  color: var(--text-tertiary);
+  font: 0.8rem var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
 @media (max-width: 920px) {
   .auth-page {
     padding-top: 124px;

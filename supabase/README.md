@@ -10,6 +10,7 @@ Proyecto: `hoorwidwqscrsxtsipxf`
 Ejecuta `supabase/schema.sql` una vez en el **SQL Editor**. Crea:
 
 - `public.motiveva_data`: un JSONB por usuario con hábitos, logs y preferencias.
+- `public.motiveva_profiles`: nombre, fecha de nacimiento, objetivo y motivación que el usuario indica al registrarse y puede cambiar en Ajustes.
 - RLS activada y políticas por fila (`auth.uid() = user_id`).
 - Trigger `updated_at`.
 

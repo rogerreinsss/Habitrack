@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useHabits } from "@/components/app/HabitProvider";
+import { useProfile } from "@/components/app/ProfileProvider";
 import { Brand } from "@/components/ui/Brand";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { bestStreak, todayProgress } from "@/lib/habits";
@@ -22,9 +23,11 @@ interface SidebarProps {
 export function Sidebar({ view, onNavigate }: SidebarProps) {
   const { data, syncStatus } = useHabits();
   const { user, signOut } = useAuth();
+  const { profile } = useProfile();
   const progress = todayProgress(data);
   const topStreak = bestStreak(data);
   const accountName =
+    profile?.displayName ||
     (typeof user?.user_metadata?.full_name === "string" &&
       user.user_metadata.full_name.trim()) ||
     (typeof user?.user_metadata?.name === "string" &&

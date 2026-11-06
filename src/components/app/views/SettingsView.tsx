@@ -4,13 +4,20 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useAuth } from "@/components/auth/AuthProvider";
 import { useHabits } from "@/components/app/HabitProvider";
+import { useProfile } from "@/components/app/ProfileProvider";
 import { useToast } from "@/components/app/ToastProvider";
 import { Toggle } from "@/components/app/Common";
 import { useTheme, type ThemeMode } from "@/components/ThemeProvider";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { activeHabits, todayProgress } from "@/lib/habits";
-import { formatDateTime, plural } from "@/lib/date";
+import { formatDateTime, plural, todayKey } from "@/lib/date";
 import { countRecords } from "@/lib/export";
+import {
+  MAIN_GOALS,
+  MOTIVATION_MAX_LENGTH,
+  NAME_MAX_LENGTH,
+  type MainGoal,
+} from "@/lib/profile";
 import {
   MOTION_KEY,
   NOTIF_KEY,
@@ -22,6 +29,107 @@ import {
 } from "@/lib/storage";
 
 const DEFAULT_REMINDER = "09:00";
+
+function ProfileCard() {
+  const { profile, save } = useProfile();
+  const { toast } = useToast();
+  const [displayName, setDisplayName] = useState(profile?.displayName ?? "");
+  const [birthDate, setBirthDate] = useState(profile?.birthDate ?? "");
+  const [mainGoal, setMainGoal] = useState<MainGoal | null>(
+    profile?.mainGoal ?? null,
+  );
+  const [motivation, setMotivation] = useState(profile?.motivation ?? "");
+  const [saving, setSaving] = useState(false);
+
+  async function handleSave(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    setSaving(true);
+    try {
+      await save({ displayName, birthDate, mainGoal, motivation });
+      toast("Perfil actualizado", "success");
+    } catch (error) {
+      toast(
+        error instanceof Error ? error.message : "No se pudo guardar.",
+        "error",
+      );
+    } finally {
+      setSaving(false);
+    }
+  }
+
+  return (
+    <section className="settings-card">
+      <div className="settings-head">
+        <span className="panel-icon">
+          <Icon name="user" size={16} />
+        </span>
+        <h2 className="settings-title">Tu perfil</h2>
+      </div>
+
+      <form className="settings-row" onSubmit={handleSave}>
+        <div className="settings-copy">
+          <span className="s-label">Datos personales</span>
+          <span className="s-sub">
+            Tu nombre, fecha de nacimiento y objetivo. Se guardan en tu cuenta
+            privada.
+          </span>
+        </div>
+        <div className="settings-inline-fields">
+          <input
+            type="text"
+            autoComplete="given-name"
+            className="form-control"
+            placeholder="Tu nombre"
+            value={displayName}
+            onChange={(event) => setDisplayName(event.target.value)}
+            maxLength={NAME_MAX_LENGTH}
+            required
+            aria-label="Tu nombre"
+          />
+          <input
+            type="date"
+            autoComplete="bday"
+            className="form-control"
+            value={birthDate}
+            onChange={(event) => setBirthDate(event.target.value)}
+            min="1900-01-01"
+            max={todayKey()}
+            required
+            aria-label="Fecha de nacimiento"
+          />
+          <select
+            className="form-control"
+            value={mainGoal ?? ""}
+            onChange={(event) =>
+              setMainGoal((event.target.value || null) as MainGoal | null)
+            }
+            aria-label="Objetivo principal"
+          >
+            <option value="">Sin objetivo principal</option>
+            {MAIN_GOALS.map((goal) => (
+              <option key={goal.value} value={goal.value}>
+                {goal.label}
+              </option>
+            ))}
+          </select>
+          <textarea
+            className="form-control"
+            placeholder="¿Qué te motiva? (opcional)"
+            value={motivation}
+            onChange={(event) => setMotivation(event.target.value)}
+            maxLength={MOTIVATION_MAX_LENGTH}
+            rows={3}
+            aria-label="Qué te motiva"
+          />
+          <button type="submit" className="btn btn-ghost" disabled={saving}>
+            {saving ? "Guardando…" : "Guardar"}
+          </button>
+        </div>
+      </form>
+    </section>
+  );
+}
 
 function SecurityCard() {
   const { user, updatePassword, changeEmail, resendEmailOtp } = useAuth();
@@ -366,6 +474,8 @@ export function SettingsView({ onImport }: SettingsViewProps) {
           </span>
         </div>
       )}
+
+      <ProfileCard />
 
       <section className="settings-card">
         <div className="settings-head">

@@ -748,6 +748,29 @@ html[data-theme="dark"] .auth-callback-spinner {
   border-top-color: var(--lavender);
 }
 
+html[data-theme="dark"] .onboarding-goal,
+html[data-theme="dark"] .auth-field textarea.onboarding-textarea {
+  background: rgba(255, 255, 255, 0.045);
+}
+
+html[data-theme="dark"] .onboarding-goal:hover,
+html[data-theme="dark"] .auth-field textarea.onboarding-textarea:focus {
+  border-color: rgba(163, 200, 170, 0.6);
+}
+
+html[data-theme="dark"] .auth-field textarea.onboarding-textarea:focus {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+html[data-theme="dark"] .onboarding-goal.is-selected {
+  border-color: rgba(163, 200, 170, 0.6);
+  background: rgba(163, 200, 170, 0.18);
+}
+
+html[data-theme="dark"] .onboarding-dots span.is-done {
+  background: var(--lavender);
+}
+
 html[data-theme="dark"] .sidebar-avatar {
   background: rgba(163, 200, 170, 0.14);
 }

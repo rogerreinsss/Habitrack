@@ -62,7 +62,7 @@ export default function PrivacyPage() {
             <div className="legal-meta">
               <span>
                 <Icon name="calendar" size={14} />
-                Última actualización: 5 de noviembre de 2026
+                Última actualización: 6 de noviembre de 2026
               </span>
               <span>
                 <Icon name="globe" size={14} />
@@ -154,6 +154,11 @@ export default function PrivacyPage() {
                 <li>
                   <strong>Datos de perfil</strong> que devuelve Google si eliges
                   «Continuar con Google»: nombre, email y foto de perfil.
+                </li>
+                <li>
+                  <strong>Datos de perfil que nos indicas</strong>: nombre, fecha
+                  de nacimiento y, si quieres, tu objetivo y tu motivación. Los
+                  puedes cambiar cuando quieras en Ajustes.
                 </li>
                 <li>
                   <strong>Datos de la app</strong>: hábitos, registros,
