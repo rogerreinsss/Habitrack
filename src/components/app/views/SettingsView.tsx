@@ -23,6 +23,203 @@ import {
 
 const DEFAULT_REMINDER = "09:00";
 
+function SecurityCard() {
+  const { user, updatePassword, changeEmail, resendEmailOtp } = useAuth();
+  const { toast } = useToast();
+  const [password, setPassword] = useState("");
+  const [confirm, setConfirm] = useState("");
+  const [changingPassword, setChangingPassword] = useState(false);
+  const [newEmail, setNewEmail] = useState("");
+  const [changingEmail, setChangingEmail] = useState(false);
+  const [resending, setResending] = useState(false);
+
+  const email = user?.email ?? "";
+  const verified = user?.email_confirmed_at != null;
+  const provider = user?.app_metadata?.provider ?? "email";
+
+  async function handlePassword(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    if (password.length < 10) {
+      toast("La contraseña debe tener al menos 10 caracteres", "error");
+      return;
+    }
+    if (password !== confirm) {
+      toast("Las contraseñas no coinciden", "error");
+      return;
+    }
+
+    setChangingPassword(true);
+    const error = await updatePassword(password);
+    setChangingPassword(false);
+
+    if (error) {
+      toast(error, "error");
+      return;
+    }
+
+    setPassword("");
+    setConfirm("");
+    toast("Contraseña actualizada. Se han cerrado tus otras sesiones.", "success");
+  }
+
+  async function handleEmail(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
+    const clean = newEmail.trim();
+    if (!clean || clean === email) {
+      toast("Escribe un email nuevo distinto del actual", "error");
+      return;
+    }
+
+    setChangingEmail(true);
+    const result = await changeEmail(clean);
+    setChangingEmail(false);
+
+    if (result.error) {
+      toast(result.error, "error");
+      return;
+    }
+
+    setNewEmail("");
+    toast(
+      result.needsConfirmation
+        ? "Te hemos enviado un código al email nuevo. Confírmalo para completar el cambio."
+        : "Email actualizado.",
+      "success",
+    );
+  }
+
+  async function handleResend() {
+    setResending(true);
+    const error = await resendEmailOtp(email);
+    setResending(false);
+    toast(
+      error ?? "Enviamos un código nuevo a tu correo.",
+      error ? "error" : "success",
+    );
+  }
+
+  return (
+    <section className="settings-card">
+      <div className="settings-head">
+        <span className="panel-icon">
+          <Icon name="shield" size={16} />
+        </span>
+        <h2 className="settings-title">Seguridad de la cuenta</h2>
+      </div>
+
+      <div className="settings-row">
+        <div className="settings-copy">
+          <span className="s-label">Email</span>
+          <span className="s-sub">
+            {email}
+            {verified ? " · verificado" : " · pendiente de verificar"}
+          </span>
+        </div>
+        {!verified && provider === "email" && (
+          <button
+            type="button"
+            className="btn btn-ghost"
+            disabled={resending}
+            onClick={() => void handleResend()}
+          >
+            {resending ? "Enviando…" : "Reenviar código"}
+          </button>
+        )}
+        {verified && (
+          <span className="status-dot" title="Email verificado" />
+        )}
+      </div>
+
+      {provider === "email" && (
+        <>
+          <form className="settings-row" onSubmit={handlePassword}>
+            <div className="settings-copy">
+              <span className="s-label">Cambiar contraseña</span>
+              <span className="s-sub">
+                Mínimo 10 caracteres. Se cerrarán tus otras sesiones.
+              </span>
+            </div>
+            <div className="settings-inline-fields">
+              <input
+                type="password"
+                autoComplete="new-password"
+                className="form-control"
+                placeholder="Contraseña nueva"
+                value={password}
+                onChange={(event) => setPassword(event.target.value)}
+                minLength={10}
+                required
+                aria-label="Contraseña nueva"
+              />
+              <input
+                type="password"
+                autoComplete="new-password"
+                className="form-control"
+                placeholder="Repite la contraseña"
+                value={confirm}
+                onChange={(event) => setConfirm(event.target.value)}
+                minLength={10}
+                required
+                aria-label="Repite la nueva contraseña"
+              />
+              <button
+                type="submit"
+                className="btn btn-ghost"
+                disabled={changingPassword}
+              >
+                {changingPassword ? "Guardando…" : "Guardar"}
+              </button>
+            </div>
+          </form>
+
+          <form className="settings-row" onSubmit={handleEmail}>
+            <div className="settings-copy">
+              <span className="s-label">Cambiar email</span>
+              <span className="s-sub">
+                Recibirás un código en el email nuevo para confirmar el cambio.
+              </span>
+            </div>
+            <div className="settings-inline-fields">
+              <input
+                type="email"
+                autoComplete="email"
+                inputMode="email"
+                className="form-control"
+                placeholder="nuevo@email.com"
+                value={newEmail}
+                onChange={(event) => setNewEmail(event.target.value)}
+                required
+                aria-label="Email nuevo"
+              />
+              <button
+                type="submit"
+                className="btn btn-ghost"
+                disabled={changingEmail}
+              >
+                {changingEmail ? "Enviando…" : "Cambiar"}
+              </button>
+            </div>
+          </form>
+        </>
+      )}
+
+      {provider !== "email" && (
+        <div className="settings-row">
+          <div className="settings-copy">
+            <span className="s-label">Acceso con {provider}</span>
+            <span className="s-sub">
+              Tu cuenta usa {provider}; la contraseña se gestiona con ese
+              servicio.
+            </span>
+          </div>
+        </div>
+      )}
+    </section>
+  );
+}
+
 const THEME_OPTIONS: { value: ThemeMode; label: string; icon: IconName }[] = [
   { value: "light", label: "Claro", icon: "sun" },
   { value: "dark", label: "Oscuro", icon: "moon" },
@@ -173,7 +370,7 @@ export function SettingsView({ onImport }: SettingsViewProps) {
       <section className="settings-card">
         <div className="settings-head">
           <span className="panel-icon">
-            <Icon name="globe" size={16} />
+            <Icon name="shield" size={16} />
           </span>
           <h2 className="settings-title">Cuenta y sincronización</h2>
         </div>
@@ -183,8 +380,7 @@ export function SettingsView({ onImport }: SettingsViewProps) {
             <div className="settings-copy">
               <span className="s-label">Sincronización no disponible</span>
               <span className="s-sub">
-                La autenticación no está configurada en este entorno. Motiveva
-                sigue funcionando en local.
+                La autenticación no está configurada en este entorno.
               </span>
             </div>
           </div>
@@ -218,21 +414,10 @@ export function SettingsView({ onImport }: SettingsViewProps) {
               />
             </div>
           </>
-        ) : (
-          <div className="settings-row">
-            <div className="settings-copy">
-              <span className="s-label">Sincroniza entre dispositivos</span>
-              <span className="s-sub">
-                Crea una cuenta o inicia sesión. Sin cuenta, Motiveva sigue
-                funcionando solo en este navegador.
-              </span>
-            </div>
-            <Link href="/login" className="btn btn-primary">
-              Iniciar sesión
-            </Link>
-          </div>
-        )}
+        ) : null}
       </section>
+
+      <SecurityCard />
 
       <section className="settings-card">
         <div className="settings-head">
@@ -374,9 +559,8 @@ export function SettingsView({ onImport }: SettingsViewProps) {
           <div className="settings-copy">
             <span className="s-label">Resetear todo</span>
             <span className="s-sub">
-              {user
-                ? "Elimina hábitos, historial y preferencias de este dispositivo y de tu cuenta."
-                : "Elimina hábitos, historial y preferencias de este dispositivo."}
+              Elimina hábitos, historial y preferencias de este dispositivo y de
+              tu cuenta.
             </span>
           </div>
 
@@ -486,17 +670,16 @@ export function SettingsView({ onImport }: SettingsViewProps) {
         <div>
           <h2 className="s-label">Privacidad por diseño</h2>
           <p className="s-sub">
-            Sin cuenta, todo se guarda en el almacenamiento local de tu
-            navegador. Si inicias sesión, tus hábitos se guardan en una copia
-            privada para sincronizarlos entre dispositivos. No hay cookies de
-            seguimiento ni publicidad.{" "}
+            Tus hábitos se guardan en una copia privada de tu cuenta y, como
+            respaldo offline, en el almacenamiento local de tu navegador. No hay
+            cookies de seguimiento ni publicidad.{" "}
             <Link href="/privacidad" className="text-link">
               Leer la política de privacidad
               <Icon name="arrowUpRight" size={13} />
             </Link>
           </p>
           <p className="s-sub settings-version">
-            Motiveva · versión 1.0 · local-first con cuenta opcional
+            Motiveva · versión 1.0 · cuenta obligatoria con sync en la nube
           </p>
         </div>
       </section>

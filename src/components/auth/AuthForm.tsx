@@ -8,8 +8,27 @@ import { BrandSymbol } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
 import { APP_PATH } from "@/lib/site";
 
-type Mode = "login" | "signup";
+type Mode = "login" | "signup" | "verify" | "forgot";
 type Status = { type: "error" | "success" | "info"; text: string } | null;
+
+const MODE_COPY: Record<Mode, { title: string; lede: string }> = {
+  login: {
+    title: "Entra en Motiveva",
+    lede: "Sincroniza tus hábitos y vuelve a ellos desde cualquier dispositivo.",
+  },
+  signup: {
+    title: "Crea tu cuenta",
+    lede: "Guarda tus hábitos en tu cuenta privada y sincronízalos entre dispositivos.",
+  },
+  verify: {
+    title: "Confirma tu email",
+    lede: "Te hemos enviado un código de 6 dígitos a tu correo. Escríbelo a continuación.",
+  },
+  forgot: {
+    title: "Recupera tu contraseña",
+    lede: "Te enviaremos un enlace para crear una contraseña nueva.",
+  },
+};
 
 function GoogleMark() {
   return (
@@ -42,20 +61,91 @@ function GoogleMark() {
 
 export function AuthForm() {
   const router = useRouter();
-  const { user, loading, configured, signIn, signUp, signInWithGoogle, signOut } =
-    useAuth();
+  const {
+    user,
+    loading,
+    configured,
+    signIn,
+    signUp,
+    verifyEmailOtp,
+    resendEmailOtp,
+    signInWithGoogle,
+    requestPasswordReset,
+    signOut,
+  } = useAuth();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
+  const [code, setCode] = useState("");
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<Status>(null);
 
   function changeMode(next: Mode) {
     setMode(next);
     setStatus(null);
+    setCode("");
     setPassword("");
     setConfirm("");
+  }
+
+  async function goAfterAuth() {
+    router.push(APP_PATH);
+    router.refresh();
+  }
+
+  async function handleVerify(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus(null);
+
+    if (code.replace(/\s/g, "").length !== 6) {
+      setStatus({ type: "error", text: "El código tiene 6 dígitos." });
+      return;
+    }
+
+    setBusy(true);
+    const error = await verifyEmailOtp(email, code);
+    if (error) {
+      setStatus({ type: "error", text: error });
+      setBusy(false);
+      return;
+    }
+    await goAfterAuth();
+  }
+
+  async function handleResend() {
+    setStatus(null);
+    setBusy(true);
+    const error = await resendEmailOtp(email);
+    setBusy(false);
+    setStatus(
+      error
+        ? { type: "error", text: error }
+        : { type: "success", text: "Enviamos un código nuevo. Mira tu correo." },
+    );
+  }
+
+  async function handleForgot(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus(null);
+
+    const cleanEmail = email.trim();
+    if (!cleanEmail) {
+      setStatus({ type: "error", text: "Escribe tu email." });
+      return;
+    }
+
+    setBusy(true);
+    const error = await requestPasswordReset(cleanEmail);
+    setBusy(false);
+    if (error) {
+      setStatus({ type: "error", text: error });
+      return;
+    }
+    setStatus({
+      type: "success",
+      text: "Te hemos enviado un enlace para crear una contraseña nueva. Revisa también la carpeta de spam.",
+    });
   }
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -67,10 +157,10 @@ export function AuthForm() {
       setStatus({ type: "error", text: "Escribe tu email." });
       return;
     }
-    if (password.length < 6) {
+    if (mode === "signup" && password.length < 10) {
       setStatus({
         type: "error",
-        text: "La contraseña debe tener al menos 6 caracteres.",
+        text: "La contraseña debe tener al menos 10 caracteres.",
       });
       return;
     }
@@ -88,8 +178,7 @@ export function AuthForm() {
         setBusy(false);
         return;
       }
-      router.push(APP_PATH);
-      router.refresh();
+      await goAfterAuth();
       return;
     }
 
@@ -101,16 +190,12 @@ export function AuthForm() {
     }
 
     if (result.needsConfirmation) {
-      setStatus({
-        type: "success",
-        text: "Te hemos enviado un correo para confirmar tu cuenta. Revisa también la carpeta de spam.",
-      });
+      setMode("verify");
       setBusy(false);
       return;
     }
 
-    router.push(APP_PATH);
-    router.refresh();
+    await goAfterAuth();
   }
 
   async function handleGoogle() {
@@ -161,14 +246,11 @@ export function AuthForm() {
             Cerrar sesión
           </button>
         </div>
-
-        <p className="auth-legal">
-          También puedes usar Motiveva sin cuenta. Tus datos locales seguirán en
-          este navegador.
-        </p>
       </div>
     );
   }
+
+  const copy = MODE_COPY[mode];
 
   return (
     <div className="auth-card">
@@ -176,143 +258,234 @@ export function AuthForm() {
         <span className="auth-mark">
           <BrandSymbol />
         </span>
-        <h1>{mode === "login" ? "Entra en Motiveva" : "Crea tu cuenta"}</h1>
-        <p>
-          {mode === "login"
-            ? "Sincroniza tus hábitos y vuelve a ellos desde cualquier dispositivo."
-            : "Guarda tus hábitos en tu cuenta privada y sincronízalos entre dispositivos."}
-        </p>
+        <h1>{copy.title}</h1>
+        <p>{copy.lede}</p>
       </div>
 
-      <div className="auth-tabs" role="tablist" aria-label="Tipo de acceso">
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === "login"}
-          className={mode === "login" ? "is-active" : ""}
-          onClick={() => changeMode("login")}
-        >
-          Entrar
-        </button>
-        <button
-          type="button"
-          role="tab"
-          aria-selected={mode === "signup"}
-          className={mode === "signup" ? "is-active" : ""}
-          onClick={() => changeMode("signup")}
-        >
-          Crear cuenta
-        </button>
-      </div>
-
-      {!configured && (
-        <div className="auth-message is-error" role="alert">
-          La autenticación no está configurada en este entorno.
-        </div>
-      )}
-
-      <button
-        type="button"
-        className="btn btn-google"
-        onClick={handleGoogle}
-        disabled={busy || !configured}
-      >
-        <GoogleMark />
-        Continuar con Google
-      </button>
-
-      <div className="auth-divider">
-        <span>o con email</span>
-      </div>
-
-      <form className="auth-form" onSubmit={handleSubmit}>
-        <label className="auth-field">
-          <span>Email</span>
-          <input
-            type="email"
-            autoComplete="email"
-            inputMode="email"
-            placeholder="tu@email.com"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
-            disabled={busy || !configured}
-            required
-          />
-        </label>
-
-        <label className="auth-field">
-          <span>Contraseña</span>
-          <input
-            type="password"
-            autoComplete={mode === "login" ? "current-password" : "new-password"}
-            placeholder="Mínimo 6 caracteres"
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
-            disabled={busy || !configured}
-            minLength={6}
-            required
-          />
-        </label>
-
-        {mode === "signup" && (
+      {mode === "verify" ? (
+        <form className="auth-form" onSubmit={handleVerify}>
           <label className="auth-field">
-            <span>Repite la contraseña</span>
+            <span>Código de verificación</span>
             <input
-              type="password"
-              autoComplete="new-password"
-              placeholder="Repite tu contraseña"
-              value={confirm}
-              onChange={(event) => setConfirm(event.target.value)}
+              type="text"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              placeholder="000000"
+              value={code}
+              onChange={(event) =>
+                setCode(event.target.value.replace(/\D/g, "").slice(0, 6))
+              }
               disabled={busy || !configured}
-              minLength={6}
+              maxLength={6}
               required
             />
           </label>
-        )}
 
-        {status && (
-          <div className={`auth-message is-${status.type}`} role="status">
-            {status.text}
-          </div>
-        )}
+          {status && (
+            <div className={`auth-message is-${status.type}`} role="status">
+              {status.text}
+            </div>
+          )}
 
-        <button
-          type="submit"
-          className="btn btn-primary btn-lg auth-submit"
-          disabled={busy || !configured}
-        >
-          {busy
-            ? "Un momento…"
-            : mode === "login"
-              ? "Entrar"
-              : "Crear mi cuenta"}
-          {!busy && <Icon name="arrowRight" size={16} />}
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="btn btn-primary btn-lg auth-submit"
+            disabled={busy || !configured}
+          >
+            {busy ? "Comprobando…" : "Confirmar mi cuenta"}
+            {!busy && <Icon name="arrowRight" size={16} />}
+          </button>
 
-      <p className="auth-switch">
-        {mode === "login" ? (
-          <>
-            ¿Todavía no tienes cuenta?{" "}
+          <p className="auth-switch">
+            ¿No te ha llegado el código?{" "}
+            <button type="button" onClick={() => void handleResend()}>
+              Reenviar código
+            </button>
+          </p>
+          <p className="auth-switch">
             <button type="button" onClick={() => changeMode("signup")}>
-              Crear una
+              Volver al registro
             </button>
-          </>
-        ) : (
-          <>
-            ¿Ya tienes cuenta?{" "}
-            <button type="button" onClick={() => changeMode("login")}>
-              Entrar
-            </button>
-          </>
-        )}
-      </p>
+          </p>
+        </form>
+      ) : (
+        <>
+          {mode !== "forgot" && (
+            <>
+              <div className="auth-tabs" role="tablist" aria-label="Tipo de acceso">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === "login"}
+                  className={mode === "login" ? "is-active" : ""}
+                  onClick={() => changeMode("login")}
+                >
+                  Entrar
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={mode === "signup"}
+                  className={mode === "signup" ? "is-active" : ""}
+                  onClick={() => changeMode("signup")}
+                >
+                  Crear cuenta
+                </button>
+              </div>
+
+              {!configured && (
+                <div className="auth-message is-error" role="alert">
+                  La autenticación no está configurada en este entorno.
+                </div>
+              )}
+
+              <button
+                type="button"
+                className="btn btn-google"
+                onClick={handleGoogle}
+                disabled={busy || !configured}
+              >
+                <GoogleMark />
+                Continuar con Google
+              </button>
+
+              <div className="auth-divider">
+                <span>o con email</span>
+              </div>
+            </>
+          )}
+
+          <form
+            className="auth-form"
+            onSubmit={mode === "forgot" ? handleForgot : handleSubmit}
+          >
+            {mode === "forgot" && (
+              <div className="auth-field">
+                <span>Email</span>
+                <input
+                  type="email"
+                  autoComplete="email"
+                  inputMode="email"
+                  placeholder="tu@email.com"
+                  value={email}
+                  onChange={(event) => setEmail(event.target.value)}
+                  disabled={busy || !configured}
+                  required
+                />
+              </div>
+            )}
+
+            {mode !== "forgot" && (
+              <>
+                <label className="auth-field">
+                  <span>Email</span>
+                  <input
+                    type="email"
+                    autoComplete="email"
+                    inputMode="email"
+                    placeholder="tu@email.com"
+                    value={email}
+                    onChange={(event) => setEmail(event.target.value)}
+                    disabled={busy || !configured}
+                    required
+                  />
+                </label>
+
+                <label className="auth-field">
+                  <span>Contraseña</span>
+                  <input
+                    type="password"
+                    autoComplete={
+                      mode === "login" ? "current-password" : "new-password"
+                    }
+                    placeholder={
+                      mode === "login" ? "Tu contraseña" : "Mínimo 10 caracteres"
+                    }
+                    value={password}
+                    onChange={(event) => setPassword(event.target.value)}
+                    disabled={busy || !configured}
+                    minLength={mode === "signup" ? 10 : undefined}
+                    required
+                  />
+                </label>
+
+                {mode === "signup" && (
+                  <label className="auth-field">
+                    <span>Repite la contraseña</span>
+                    <input
+                      type="password"
+                      autoComplete="new-password"
+                      placeholder="Repite tu contraseña"
+                      value={confirm}
+                      onChange={(event) => setConfirm(event.target.value)}
+                      disabled={busy || !configured}
+                      minLength={10}
+                      required
+                    />
+                  </label>
+                )}
+              </>
+            )}
+
+            {status && (
+              <div className={`auth-message is-${status.type}`} role="status">
+                {status.text}
+              </div>
+            )}
+
+            {mode === "forgot" ? (
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg auth-submit"
+                disabled={busy || !configured}
+              >
+                {busy ? "Enviando…" : "Enviar enlace de recuperación"}
+                {!busy && <Icon name="arrowRight" size={16} />}
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="btn btn-primary btn-lg auth-submit"
+                disabled={busy || !configured}
+              >
+                {busy
+                  ? "Un momento…"
+                  : mode === "login"
+                    ? "Entrar"
+                    : "Crear mi cuenta"}
+                {!busy && <Icon name="arrowRight" size={16} />}
+              </button>
+            )}
+          </form>
+
+          <p className="auth-switch">
+            {mode === "login" ? (
+              <>
+                ¿Has olvidado tu contraseña?{" "}
+                <button type="button" onClick={() => changeMode("forgot")}>
+                  Recuperar
+                </button>
+              </>
+            ) : mode === "forgot" ? (
+              <button type="button" onClick={() => changeMode("login")}>
+                Volver a iniciar sesión
+              </button>
+            ) : (
+              <>
+                ¿Ya tienes cuenta?{" "}
+                <button type="button" onClick={() => changeMode("login")}>
+                  Entrar
+                </button>
+              </>
+            )}
+          </p>
+        </>
+      )}
 
       <p className="auth-legal">
-        Al continuar aceptas la{" "}
-        <Link href="/privacidad">política de privacidad</Link>. También puedes{" "}
-        <Link href={APP_PATH}>seguir sin cuenta</Link>: Motiveva funciona en
-        local.
+        Al continuar aceptas los{" "}
+        <Link href="/terminos">términos y condiciones</Link> y la{" "}
+        <Link href="/privacidad">política de privacidad</Link>.
       </p>
     </div>
   );

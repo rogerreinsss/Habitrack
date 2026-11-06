@@ -1,6 +1,10 @@
 # Motiveva
 
-Seguidor de hábitos **local-first** con una interfaz botánica clara y oscura. Funciona sin cuenta y, si el usuario lo decide, sincroniza sus hábitos entre dispositivos con Supabase Auth. Sin anuncios ni analítica.
+Seguidor de hábitos tranquilo, con interfaz botánica clara y oscura. Cada
+persona usa su cuenta: los hábitos se guardan en una copia privada en Supabase
+y se sincronizan entre dispositivos. El inicio de sesión es obligatorio y la
+verificación del correo se hace con un código de 6 dígitos. Sin anuncios ni
+analítica.
 
 Este repositorio contiene la versión Next.js del proyecto. El archivo `index.html` de la raíz es la versión original en HTML/CSS/JS y se conserva como referencia.
 
@@ -64,6 +68,9 @@ En Supabase Auth → URL Configuration, configura:
   - `https://motiveva.vercel.app/**`
   - `http://localhost:3000/**`
 
+Configuración completa (verificación por código, plantillas de correo,
+restablecimiento de contraseña) en `supabase/README.md`.
+
 El proveedor de Google se configura en Supabase Auth → Providers → Google. El redirect URI de Google Cloud debe ser `https://<project-ref>.supabase.co/auth/v1/callback`.
 
 ## Rutas
@@ -71,10 +78,13 @@ El proveedor de Google se configura en Supabase Auth → Providers → Google. E
 | Ruta | Contenido |
 | --- | --- |
 | `/` | Landing: propuesta de valor, funciones, cómo funciona, privacidad, FAQ y CTA |
-| `/app` | Aplicación: hoy, hábitos, estadísticas y ajustes |
+| `/app` | Aplicación (requiere sesión): hoy, hábitos, estadísticas y ajustes |
 | `/login` | Login y registro con email/contraseña o Google |
 | `/auth/callback` | Callback de OAuth y confirmación de email |
+| `/auth/reset` | Crear una contraseña nueva desde el enlace de recuperación |
+| `/terminos` | Términos y condiciones del servicio |
 | `/privacidad` | Política de privacidad |
+| `/cookies` | Política de cookies y almacenamiento |
 | `/sitemap.xml` | Sitemap generado desde `src/app/sitemap.ts` |
 | `/robots.txt` | Robots generado desde `src/app/robots.ts` |
 | `/manifest.webmanifest` | Manifest PWA |
@@ -82,14 +92,33 @@ El proveedor de Google se configura en Supabase Auth → Providers → Google. E
 | `/apple-icon` | Icono para iOS |
 | `/icon.svg` | Favicon vectorial |
 
+## Cuenta y seguridad
+
+- El inicio de sesión es obligatorio: sin sesión, `/app` redirige a `/login`
+  y no se renderiza ningún dato (`RequireAuth`).
+- El registro confirma el email con un **código de 6 dígitos** que se introduce
+  en la propia pantalla (`verifyOtp`); también llega un enlace de respaldo que
+  pasa por `/auth/callback`.
+- Contraseñas de **10 caracteres o más**, hash en Supabase (jamás en claro).
+- Recuperación con enlace/código (`resetPasswordForEmail`) y pantalla dedicada
+  `/auth/reset`; al guardar una contraseña nueva se cierran **todas las demás
+  sesiones** (`signOut({ scope: "others" })`).
+- Cambio de contraseña y de email desde Ajustes → Seguridad. El cambio de
+  email pide confirmación con código en la dirección nueva.
+- El estado se guarda en `localStorage` (clave `motivevav2`) como copia de
+  trabajo y se sincroniza con el JSONB privado de `public.motiveva_data`
+  (RLS: cada usuario solo lee y escribe su fila).
+
 ## Datos y privacidad
 
-- Sin cuenta, los hábitos, registros y preferencias viven en `localStorage` bajo la clave `motivevav2`. El tema elegido (claro, oscuro o sistema) se guarda aparte bajo la clave `motivevaTheme`.
-- Con cuenta, además se guarda un snapshot JSONB privado en `public.motiveva_data`, protegido con RLS: cada usuario solo puede leer y escribir su propia fila.
-- No hay cookies de analítica, píxeles ni publicidad. La autenticación opcional usa Supabase y el sitio se aloja en Vercel.
+- Hábitos, registros y preferencias viven en el navegador bajo `motivevav2`
+  (respaldo offline) y en una copia privada JSONB en `public.motiveva_data`,
+  protegida con RLS: cada usuario solo puede leer y escribir su propia fila.
+- No hay cookies de analítica, píxeles ni publicidad. Solo el almacenamiento
+  técnico de la sesión (claves `sb-*` de Supabase Auth). Detalles en
+  `/cookies`.
 - Exportar descarga un JSON con hábitos e historial. Importar acepta ese mismo formato, con validación estricta, límite de 3 MB y protección contra claves peligrosas.
-- La primera visita crea cuatro hábitos de ejemplo para poder probar la app. Si ya existe el almacenamiento, no se vuelve a sembrar.
-- Al iniciar sesión por primera vez, si la cuenta todavía no tiene copia en la nube, se sube el estado local. Si ya existe una copia, se carga la de la nube.
+- Al iniciar sesión, si la cuenta todavía no tiene copia en la nube, se sube el estado local. Si ya existe una copia, se carga la de la nube.
 
 ## Seguridad
 
@@ -103,8 +132,9 @@ El proveedor de Google se configura en Supabase Auth → Providers → Google. E
 
 - Metadatos por página, canonical y Open Graph/Twitter en `src/app/layout.tsx` y en cada página.
 - JSON-LD de `WebSite`, `SoftwareApplication` y `FAQPage`.
-- `sitemap.xml`, `robots.txt` y manifest generados por código.
+- `sitemap.xml` (landing + legales), `robots.txt` (bloquea `/app`, `/auth/` y `/login`) y manifest generados por código.
 - HTML semántico, `h1` único por página, enlaces con texto descriptivo y `lang="es"`.
+- `/app` es privado: `noindex` en metadata y excluido del sitemap.
 
 ## Estructura
 

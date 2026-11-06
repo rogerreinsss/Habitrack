@@ -21,9 +21,18 @@ interface AuthContextValue {
     email: string,
     password: string,
   ) => Promise<{ error: string | null; needsConfirmation: boolean }>;
+  verifyEmailOtp: (email: string, code: string) => Promise<string | null>;
+  resendEmailOtp: (email: string) => Promise<string | null>;
   signInWithGoogle: () => Promise<string | null>;
+  requestPasswordReset: (email: string) => Promise<string | null>;
+  updatePassword: (newPassword: string) => Promise<string | null>;
+  changeEmail: (newEmail: string) => Promise<
+    { error: string | null; needsConfirmation: boolean }
+  >;
   signOut: () => Promise<void>;
 }
+
+export const MIN_PASSWORD_LENGTH = 10;
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -40,7 +49,22 @@ function translateAuthError(message: string): string {
     return "Ya existe una cuenta con ese email.";
   }
   if (normalized.includes("password should be at least")) {
-    return "La contraseña debe tener al menos 6 caracteres.";
+    return `La contraseña debe tener al menos ${MIN_PASSWORD_LENGTH} caracteres.`;
+  }
+  if (normalized.includes("weak password") || normalized.includes("longest common")) {
+    return "La contraseña es demasiado débil. Usa letras, números y símbolos.";
+  }
+  if (normalized.includes("token has expired") || normalized.includes("otp expired")) {
+    return "El código ha caducado. Solicita uno nuevo.";
+  }
+  if (normalized.includes("invalid otp") || normalized.includes("invalid token")) {
+    return "El código no es correcto. Revísalo e inténtalo de nuevo.";
+  }
+  if (normalized.includes("email rate limit") || normalized.includes("resend")) {
+    return "Has recibido demasiados correos seguidos. Espera un minuto antes de pedir otro.";
+  }
+  if (normalized.includes("reauthentication required")) {
+    return "Confirma tu contraseña para hacer este cambio. Cierra sesión y vuelve a entrar si el problema continúa.";
   }
   if (normalized.includes("unable to validate email address")) {
     return "El email no parece válido.";
@@ -130,6 +154,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return { error: null, needsConfirmation: !data.session };
   }
 
+  async function verifyEmailOtp(email: string, code: string): Promise<string | null> {
+    if (!supabase) return "La autenticación no está configurada.";
+
+    const { error } = await supabase.auth.verifyOtp({
+      email: email.trim(),
+      token: code.replace(/\s/g, ""),
+      type: "email",
+    });
+
+    return error ? translateAuthError(error.message) : null;
+  }
+
+  async function resendEmailOtp(email: string): Promise<string | null> {
+    if (!supabase) return "La autenticación no está configurada.";
+
+    const { error } = await supabase.auth.resend({
+      type: "signup",
+      email: email.trim(),
+    });
+
+    return error ? translateAuthError(error.message) : null;
+  }
+
   async function signInWithGoogle(): Promise<string | null> {
     if (!supabase) return "La sincronización no está configurada.";
 
@@ -147,6 +194,50 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return error ? translateAuthError(error.message) : null;
   }
 
+  async function requestPasswordReset(email: string): Promise<string | null> {
+    if (!supabase) return "La autenticación no está configurada.";
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: `${window.location.origin}/auth/reset`,
+    });
+
+    return error ? translateAuthError(error.message) : null;
+  }
+
+  async function updatePassword(newPassword: string): Promise<string | null> {
+    if (!supabase) return "La autenticación no está configurada.";
+
+    const { error } = await supabase.auth.updateUser({
+      password: newPassword,
+    });
+    if (error) return translateAuthError(error.message);
+
+    // Invalidate every other session after a password change.
+    await supabase.auth.signOut({ scope: "others" });
+    return null;
+  }
+
+  async function changeEmail(
+    newEmail: string,
+  ): Promise<{ error: string | null; needsConfirmation: boolean }> {
+    if (!supabase) return { error: "La autenticación no está configurada.", needsConfirmation: false };
+
+    const { data, error } = await supabase.auth.updateUser({
+      email: newEmail.trim(),
+    });
+
+    if (error) {
+      return { error: translateAuthError(error.message), needsConfirmation: false };
+    }
+
+    return {
+      error: null,
+      // Supabase sends a confirmation code to the new address when email
+      // changes require confirmation (the default).
+      needsConfirmation: data.user?.new_email !== undefined,
+    };
+  }
+
   async function signOut(): Promise<void> {
     if (!supabase) return;
     await supabase.auth.signOut();
@@ -160,7 +251,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       configured: isSupabaseConfigured,
       signIn,
       signUp,
+      verifyEmailOtp,
+      resendEmailOtp,
       signInWithGoogle,
+      requestPasswordReset,
+      updatePassword,
+      changeEmail,
       signOut,
     }),
     // Actions only close over the stable Supabase client.

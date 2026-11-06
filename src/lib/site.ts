@@ -22,9 +22,11 @@ export const CONTACT_EMAIL =
 export const SITE_NAME = "Motiveva";
 export const SITE_TAGLINE = "Tu mejor versión, sin ruido";
 export const SITE_DESCRIPTION =
-  "Motiveva es un seguidor de hábitos local-first con rachas, estadísticas, historial y recordatorios. Funciona sin cuenta y, si quieres, sincroniza tus hábitos entre dispositivos. Sin anuncios.";
+  "Motiveva es un seguidor de hábitos con rachas, estadísticas, historial y recordatorios. Crea tu cuenta gratuita y sincroniza tus hábitos entre dispositivos. Sin anuncios.";
 
 export const APP_PATH = "/app";
+export const LOGIN_PATH = "/login";
+export const RESET_PATH = "/auth/reset";
 
 export const NAV_LINKS = [
   { href: "#producto", label: "Producto" },

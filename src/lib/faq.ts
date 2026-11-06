@@ -7,27 +7,32 @@ export const FAQ_ITEMS = [
   {
     question: "¿Necesito crear una cuenta?",
     answer:
-      "No. Puedes abrir Motiveva y empezar sin registro. La cuenta es opcional: sirve para guardar una copia privada y sincronizar tus hábitos entre dispositivos.",
+      "Sí. La cuenta guarda tu espacio privado y permite que tus hábitos te acompañen entre dispositivos. Se crea con un email, una contraseña y un código de verificación que enviamos a tu correo.",
   },
   {
     question: "¿Dónde se guardan mis hábitos?",
     answer:
-      "Sin cuenta, en el almacenamiento local de tu navegador (localStorage). Si creas una cuenta, se guarda además una copia privada en Supabase para que puedas recuperarla en otro dispositivo. Solo tú puedes leerla.",
+      "En una copia privada en Supabase, asociada únicamente a tu cuenta y protegida con Row Level Security: solo tú puedes leerla y escribirla. Tu navegador guarda además una copia de trabajo para que la app funcione aunque falle la conexión.",
   },
   {
     question: "¿Puedo pasar mis datos a otro dispositivo?",
     answer:
-      "Sí. Puedes exportar una copia completa en JSON desde Ajustes e importarla en el otro dispositivo, o iniciar sesión con tu cuenta para que se carguen automáticamente.",
+      "Sí. Inicia sesión con tu cuenta en el otro dispositivo y se descargará automáticamente tu copia. También puedes exportar una copia completa en JSON desde Ajustes e importarla donde quieras.",
+  },
+  {
+    question: "¿Qué pasa si olvido mi contraseña?",
+    answer:
+      "Desde la pantalla de acceso puedes pedir un enlace de recuperación a tu email, que te lleva a una página segura para crear una contraseña nueva. Al cambiarla se cierran todas tus otras sesiones por seguridad.",
   },
   {
     question: "¿Qué pasa si borro los datos del navegador?",
     answer:
-      "Sin cuenta se eliminan tus hábitos e historial locales. Con cuenta, al volver a iniciar sesión se descarga la copia guardada en la nube. Aun así, exportar una copia de seguridad de vez en cuando es buena idea.",
+      "Se elimina la copia de trabajo local, pero al volver a iniciar sesión se descarga la copia guardada en la nube. Aun así, exportar una copia de seguridad de vez en cuando es buena idea.",
   },
   {
     question: "¿Usa cookies, analítica o anuncios?",
     answer:
-      "No hay cookies de seguimiento, píxeles, analítica de terceros ni publicidad. La cuenta opcional usa Supabase para autenticación y almacenamiento, y el sitio se aloja en Vercel.",
+      "No hay cookies de seguimiento, píxeles, analítica de terceros ni publicidad. Solo el almacenamiento técnico de la sesión (con account en Supabase) y de los datos de la app. El sitio se aloja en Vercel.",
   },
   {
     question: "¿Cómo funcionan los recordatorios?",
@@ -37,6 +42,11 @@ export const FAQ_ITEMS = [
   {
     question: "¿Funciona sin conexión?",
     answer:
-      "El modo sin cuenta funciona sin conexión una vez cargada la app. La sincronización con tu cuenta necesita red; si falla, tus cambios siguen guardados en el dispositivo y puedes reintentar al volver a conectar.",
+      "Una vez cargada la app, sí: la copia de trabajo está en tu navegador. La sincronización con tu cuenta necesita red; si falla, tus cambios siguen guardados en el dispositivo y se subirán al volver a conectar.",
+  },
+  {
+    question: "¿Cómo borro mi cuenta?",
+    answer:
+      "Desde Ajustes puedes vaciar tus datos (hábitos, historial y copia en la nube). Para eliminar la cuenta por completo, escribe a nuestro email de contacto y la borraremos junto con su copia.",
   },
 ] as const;

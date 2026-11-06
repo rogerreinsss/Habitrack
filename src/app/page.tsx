@@ -42,7 +42,7 @@ const FEATURES: {
   {
     icon: "shield",
     title: "Tus datos, bajo tu control",
-    text: "Empieza sin cuenta: todo vive en el almacenamiento local de tu navegador. Si quieres, inicia sesión y guarda una copia privada para sincronizar entre dispositivos. Sin anuncios.",
+    text: "Tu cuenta guarda una copia privada en la nube, protegida con cifrado y Row Level Security. Exporta o borra todo cuando quieras. Sin anuncios.",
     span: "span-2",
   },
   {
@@ -60,8 +60,8 @@ const FEATURES: {
 const STEPS = [
   {
     number: "01",
-    title: "Abre la app",
-    text: "Sin registro obligatorio: abre, prueba y decide después. La primera vez encontrarás cuatro hábitos de ejemplo.",
+    title: "Crea tu cuenta",
+    text: "Un email, una contraseña y un código de verificación para confirmar que eres tú. La primera vez encontrarás cuatro hábitos de ejemplo.",
   },
   {
     number: "02",
@@ -78,8 +78,8 @@ const STEPS = [
 const PRIVACY_POINTS = [
   {
     icon: "database" as const,
-    title: "Guardado en tu navegador",
-    text: "Sin cuenta, cada hábito y cada marca viven en localStorage, en tu propio dispositivo. Con cuenta, se guarda además una copia privada para sincronizarlos.",
+    title: "Copia privada en la nube",
+    text: "Cada hábito y cada marca se guardan en una copia privada asociada a tu cuenta, protegida con Row Level Security: solo tú puedes leerla.",
   },
   {
     icon: "eyeOff" as const,
@@ -89,7 +89,7 @@ const PRIVACY_POINTS = [
   {
     icon: "trash" as const,
     title: "Borrar es borrar",
-    text: "Desde Ajustes puedes eliminar todo en un clic. Si tienes cuenta, también se vacía la copia en la nube. Puedes exportar una copia antes, si quieres.",
+    text: "Desde Ajustes puedes eliminar todo en un clic: se vacía también la copia en la nube. Puedes exportar una copia antes, si quieres.",
   },
 ];
 
@@ -149,7 +149,7 @@ export default async function HomePage() {
           <div className="container hero-inner">
             <p className="eyebrow">
               <span className="eyebrow-dot" aria-hidden="true" />
-              Local-first · Cuenta opcional · Sin ruido
+              Cuenta gratuita · Sync en la nube · Sin ruido
             </p>
 
             <h1 className="hero-title" id="hero-title">
@@ -159,9 +159,9 @@ export default async function HomePage() {
             </h1>
 
             <p className="hero-lede">
-              Un seguidor de hábitos que vive en tu dispositivo y, si quieres,
-              te sigue entre dispositivos. Rachas honestas, estadísticas claras
-              y un lugar tranquilo para volver cada día.
+              Un seguidor de hábitos con tu cuenta privada: tus rachas y
+              estadísticas te siguen a cualquier dispositivo. Rachas honestas,
+              estadísticas claras y un lugar tranquilo para volver cada día.
             </p>
 
             <div className="hero-cta">
@@ -176,10 +176,10 @@ export default async function HomePage() {
 
             <ul className="hero-proof">
               <li>
-                <Icon name="check" size={13} /> Sin registro obligatorio
+                <Icon name="check" size={13} /> Verificación de email incluida
               </li>
               <li>
-                <Icon name="shield" size={13} /> Local-first
+                <Icon name="shield" size={13} /> Copia privada con RLS
               </li>
               <li>
                 <Icon name="sparkle" size={13} /> Gratis para siempre
@@ -293,9 +293,9 @@ export default async function HomePage() {
                   <span className="gradient-text">datos nuestros.</span>
                 </h2>
                 <p className="section-lede">
-                  Sin cuenta, Motiveva funciona entera en tu navegador. Si
-                  decides crear una, tus hábitos se guardan en tu espacio
-                  privado para sincronizarlos. Nunca los usamos para publicidad.
+                  Motiveva funciona con cuenta: tus hábitos se guardan en tu
+                  espacio privado de la nube y, como respaldo, en tu navegador.
+                  Solo tú puedes leerlos. Nunca los usamos para publicidad.
                 </p>
                 <Link href="/privacidad" className="btn btn-ghost">
                   Leer la política de privacidad
@@ -352,8 +352,8 @@ export default async function HomePage() {
               <span className="gradient-text">pequeño.</span>
             </h2>
             <p className="final-lede">
-              Un hábito. Un día. Sin registro obligatorio ni tarjeta. Tus datos
-              se quedan contigo desde el primer clic.
+              Un hábito. Un día. Solo un email para empezar: sin tarjeta, sin
+              publicidad y con tus datos siempre contigo.
             </p>
             <div className="hero-cta">
               <Link href={APP_PATH} className="btn btn-primary btn-lg">
@@ -365,7 +365,7 @@ export default async function HomePage() {
               </Link>
             </div>
             <p className="final-note">
-              Gratis. Local-first. Sin letra pequeña.
+              Gratis. Cuenta con verificación de email. Sin letra pequeña.
             </p>
           </div>
         </section>

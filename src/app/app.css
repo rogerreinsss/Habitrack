@@ -950,6 +950,24 @@
   font-variant-numeric: tabular-nums;
 }
 
+/* Security card rows act as forms: copy sits above a compact field group. */
+.settings-inline-fields {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 8px;
+  flex-shrink: 0;
+  width: min(300px, 100%);
+}
+
+.settings-inline-fields .form-control {
+  width: 100%;
+}
+
+.settings-inline-fields .btn {
+  align-self: flex-end;
+}
+
 .reset-confirm {
   display: flex;
   align-items: center;
@@ -1238,6 +1256,10 @@
 
   .settings-row {
     gap: 12px;
+  }
+
+  .settings-inline-fields {
+    width: 100%;
   }
 
   .settings-row .btn {

@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
-const LAST_UPDATED = new Date("2026-11-04T00:00:00.000Z");
+const LAST_UPDATED = new Date("2026-11-06T00:00:00.000Z");
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
@@ -12,16 +12,22 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${SITE_URL}/app`,
-      lastModified: LAST_UPDATED,
-      changeFrequency: "monthly",
-      priority: 0.9,
-    },
-    {
       url: `${SITE_URL}/privacidad`,
       lastModified: LAST_UPDATED,
       changeFrequency: "yearly",
       priority: 0.5,
+    },
+    {
+      url: `${SITE_URL}/cookies`,
+      lastModified: LAST_UPDATED,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
+    {
+      url: `${SITE_URL}/terminos`,
+      lastModified: LAST_UPDATED,
+      changeFrequency: "yearly",
+      priority: 0.4,
     },
   ];
 }

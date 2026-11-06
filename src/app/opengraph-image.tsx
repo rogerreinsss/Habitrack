@@ -2,11 +2,11 @@ import { ImageResponse } from "next/og";
 import { BRAND_COLORS, RIBBON_PATHS } from "@/lib/brand";
 
 export const alt =
-  "Motiveva — Tu mejor versión, sin ruido. Seguidor de hábitos local-first.";
+  "Motiveva — Tu mejor versión, sin ruido. Seguidor de hábitos con cuenta gratuita y sync en la nube.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const CHIPS = ["Local-first", "Cuenta opcional", "Sin anuncios", "Gratis"];
+const CHIPS = ["Sync en la nube", "Cuenta gratis", "Sin anuncios", "Verificado"];
 
 export default function OpenGraphImage() {
   return new ImageResponse(

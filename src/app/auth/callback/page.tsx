@@ -96,9 +96,6 @@ export default function AuthCallbackPage() {
               Volver a intentarlo
               <Icon name="arrowRight" size={16} />
             </Link>
-            <Link href={APP_PATH} className="btn btn-ghost">
-              Seguir sin cuenta
-            </Link>
           </div>
         )}
       </div>

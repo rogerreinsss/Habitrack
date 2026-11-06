@@ -17,9 +17,10 @@ const columns = [
   {
     title: "Legal",
     links: [
+      { href: "/terminos", label: "Términos y condiciones", external: false },
       { href: "/privacidad", label: "Política de privacidad", external: false },
+      { href: "/cookies", label: "Política de cookies", external: false },
       { href: "/privacidad#seguridad", label: "Seguridad", external: false },
-      { href: "/privacidad#derechos", label: "Tus derechos", external: false },
       { href: `mailto:${CONTACT_EMAIL}`, label: "Contacto", external: true },
     ],
   },
@@ -32,12 +33,12 @@ export function SiteFooter() {
         <div className="footer-brand">
           <Brand href="/" />
           <p>
-            Un lugar tranquilo para construir constancia. Sin cuenta
-            obligatoria, sin anuncios y sin ruido.
+            Un lugar tranquilo para construir constancia. Con cuenta, sin
+            anuncios y sin ruido.
           </p>
           <span className="footer-local">
             <Icon name="shield" size={14} />
-            Local-first · Cuenta opcional
+            Sync en la nube · Sin tracking
           </span>
         </div>
 

@@ -1,27 +1,26 @@
 import type { Metadata } from "next";
 import { HabitApp } from "@/components/app/HabitApp";
 import { HabitProvider } from "@/components/app/HabitProvider";
+import { RequireAuth } from "@/components/auth/RequireAuth";
 import { ToastProvider } from "@/components/app/ToastProvider";
-import { SITE_DESCRIPTION } from "@/lib/site";
+import { APP_PATH } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Abrir la app",
   description:
-    "Abre Motiveva y empieza a seguir tus hábitos. Funciona sin cuenta en tu dispositivo y, si quieres, sincroniza tus datos entre dispositivos.",
-  alternates: { canonical: "/app" },
-  openGraph: {
-    title: "Motiveva — Tu mejor versión, sin ruido",
-    description: SITE_DESCRIPTION,
-    url: "/app",
-  },
-  robots: { index: true, follow: true },
+    "Tu espacio de hábitos en Motiveva: hoy, hábitos, estadísticas y ajustes, sincronizados con tu cuenta.",
+  alternates: { canonical: APP_PATH },
+  // Private, gated screen: never index it.
+  robots: { index: false, follow: false },
 };
 
 export default function AppPage() {
   return (
     <ToastProvider>
       <HabitProvider>
-        <HabitApp />
+        <RequireAuth>
+          <HabitApp />
+        </RequireAuth>
       </HabitProvider>
     </ToastProvider>
   );

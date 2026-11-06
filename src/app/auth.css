@@ -389,6 +389,31 @@
   line-height: 1.6;
 }
 
+.auth-callback-brand {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: -24px;
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.9);
+  color: var(--green-deep, #2d5a3d);
+}
+
+.auth-callback-card .auth-form {
+  width: 100%;
+  text-align: left;
+}
+
+.auth-callback-card .auth-field {
+  margin-bottom: 10px;
+}
+
+.auth-callback-card .auth-legal {
+  margin-top: 14px;
+}
+
 .auth-callback-spinner {
   width: 34px;
   height: 34px;

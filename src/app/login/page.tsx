@@ -5,7 +5,6 @@ import { MarketingNav } from "@/components/marketing/MarketingNav";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
 import { StarField } from "@/components/ui/Decor";
 import { Icon } from "@/components/ui/Icon";
-import { APP_PATH } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Iniciar sesión",
@@ -18,7 +17,7 @@ export const metadata: Metadata = {
 const BENEFITS = [
   "Tus hábitos y tu historial en todos tus dispositivos.",
   "Una copia privada en la nube, protegida por tu cuenta.",
-  "Puedes seguir usando Motiveva sin cuenta cuando quieras.",
+  "Verificación de email y restablecimiento de contraseña incluidos.",
 ];
 
 export default function LoginPage() {
@@ -48,8 +47,8 @@ export default function LoginPage() {
               ))}
             </ul>
 
-            <Link href={APP_PATH} className="auth-back-link">
-              Seguir sin cuenta
+            <Link href="/" className="auth-back-link">
+              Conocer Motiveva
               <Icon name="arrowRight" size={15} />
             </Link>
           </div>

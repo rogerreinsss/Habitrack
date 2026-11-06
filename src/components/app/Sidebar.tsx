@@ -5,8 +5,7 @@ import { useAuth } from "@/components/auth/AuthProvider";
 import { useHabits } from "@/components/app/HabitProvider";
 import { Brand } from "@/components/ui/Brand";
 import { Icon, type IconName } from "@/components/ui/Icon";
-import { activeHabits, bestStreak, todayProgress } from "@/lib/habits";
-import { plural } from "@/lib/date";
+import { bestStreak, todayProgress } from "@/lib/habits";
 import type { View } from "@/lib/types";
 
 const primaryNav: { view: View; label: string; icon: IconName }[] = [
@@ -24,8 +23,6 @@ export function Sidebar({ view, onNavigate }: SidebarProps) {
   const { data, syncStatus } = useHabits();
   const { user, signOut } = useAuth();
   const progress = todayProgress(data);
-  const active = activeHabits(data);
-  const archived = data.habits.length - active.length;
   const topStreak = bestStreak(data);
   const accountName =
     (typeof user?.user_metadata?.full_name === "string" &&
@@ -33,20 +30,17 @@ export function Sidebar({ view, onNavigate }: SidebarProps) {
     (typeof user?.user_metadata?.name === "string" &&
       user.user_metadata.name.trim()) ||
     user?.email?.split("@")[0] ||
-    "Tu espacio local";
+    "Tu cuenta";
+  const emailVerified = user?.email_confirmed_at != null;
   const initials = accountName.slice(0, 2).toUpperCase();
-  const accountSub = !user
-    ? `${plural(active.length, "hábito activo", "hábitos activos")}${
-        archived > 0
-          ? ` · ${archived} archivado${archived === 1 ? "" : "s"}`
-          : ""
-      }`
+  const accountSub = !emailVerified
+    ? "Email pendiente de verificar"
     : syncStatus === "synced"
       ? "Sincronizado en la nube"
       : syncStatus === "syncing"
         ? "Sincronizando…"
         : syncStatus === "error"
-          ? "Solo en este dispositivo"
+          ? "No se pudo sincronizar, se reintentará"
           : "Cuenta conectada";
 
   return (
@@ -90,11 +84,8 @@ export function Sidebar({ view, onNavigate }: SidebarProps) {
         </button>
 
         <div className="sidebar-user">
-          <span
-            className={`user-avatar ${user ? "is-account" : ""}`}
-            aria-hidden="true"
-          >
-            {user ? initials : <Icon name="sparkle" size={16} />}
+          <span className="user-avatar is-account" aria-hidden="true">
+            {initials}
           </span>
           <div className="user-copy">
             <span className="user-name">{accountName}</span>
@@ -104,21 +95,14 @@ export function Sidebar({ view, onNavigate }: SidebarProps) {
           </div>
         </div>
 
-        {user ? (
-          <button
-            type="button"
-            className="sidebar-account-action"
-            onClick={() => void signOut()}
-          >
-            <Icon name="external" size={13} />
-            Cerrar sesión
-          </button>
-        ) : (
-          <Link href="/login" className="sidebar-account-action">
-            <Icon name="globe" size={13} />
-            Iniciar sesión para sincronizar
-          </Link>
-        )}
+        <button
+          type="button"
+          className="sidebar-account-action"
+          onClick={() => void signOut()}
+        >
+          <Icon name="external" size={13} />
+          Cerrar sesión
+        </button>
 
         <div className="sidebar-streak">
           <Icon name="flame" size={14} />
