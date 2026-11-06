@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { BRAND_COLORS, RIBBON_PATHS } from "@/lib/brand";
 
 export const size = { width: 180, height: 180 };
 export const contentType = "image/png";
@@ -13,40 +14,24 @@ export default function AppleIcon() {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "#030014",
+          backgroundColor: BRAND_COLORS.deepForest,
           backgroundImage:
-            "radial-gradient(circle at 30% 22%, rgba(229,156,255,0.22), transparent 52%), radial-gradient(circle at 76% 82%, rgba(80,70,228,0.28), transparent 55%)",
+            "radial-gradient(circle at 28% 18%, rgba(168,189,166,0.2), transparent 55%), radial-gradient(circle at 82% 86%, rgba(184,156,120,0.14), transparent 58%)",
         }}
       >
-        <div
-          style={{
-            width: 118,
-            height: 118,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            borderRadius: 999,
-            border: "2px solid rgba(185,168,255,0.5)",
-            color: "#f4f1ff",
-            fontSize: 62,
-            fontWeight: 500,
-          }}
-        >
-          <svg
-            width="62"
-            height="62"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="#f4f1ff"
-            strokeWidth="1.7"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M20 6 9 17l-5-5" />
-          </svg>
-        </div>
+        <svg width="132" height="58" viewBox="0 0 324 140">
+          <defs>
+            <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stopColor={BRAND_COLORS.sage} />
+              <stop offset="0.52" stopColor={BRAND_COLORS.softGreen} />
+              <stop offset="1" stopColor={BRAND_COLORS.sage} />
+            </linearGradient>
+          </defs>
+          <path d={RIBBON_PATHS.main} fill="url(#ribbon)" />
+          <path d={RIBBON_PATHS.upright} fill={BRAND_COLORS.sage} />
+        </svg>
       </div>
     ),
-    { ...size },
+    size,
   );
 }

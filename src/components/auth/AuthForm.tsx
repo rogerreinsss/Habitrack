@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { useAuth } from "@/components/auth/AuthProvider";
+import { BrandSymbol } from "@/components/ui/Brand";
 import { Icon } from "@/components/ui/Icon";
 import { APP_PATH } from "@/lib/site";
 
@@ -125,8 +126,8 @@ export function AuthForm() {
   if (loading) {
     return (
       <div className="auth-card auth-card-loading" aria-live="polite">
-        <span className="auth-loading-mark" aria-hidden="true">
-          ✦
+        <span className="auth-loading-mark">
+          <BrandSymbol />
         </span>
         <p>Comprobando tu sesión…</p>
       </div>
@@ -172,8 +173,8 @@ export function AuthForm() {
   return (
     <div className="auth-card">
       <div className="auth-head">
-        <span className="auth-mark" aria-hidden="true">
-          ✦
+        <span className="auth-mark">
+          <BrandSymbol />
         </span>
         <h1>{mode === "login" ? "Entra en Motiveva" : "Crea tu cuenta"}</h1>
         <p>

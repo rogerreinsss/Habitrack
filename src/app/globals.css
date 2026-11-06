@@ -1,28 +1,42 @@
 /* ==========================================================================
-   Motiveva — Reflect Notes design system
-   Dark cosmos · single lavender accent · rim-lit surfaces · no drop shadows
+   Motiveva — botanical identity
+   Ivory fields · sage ribbon · forest accents · calm, tactile surfaces
    ========================================================================== */
 
 :root {
-  --void: #030014;
-  --surface: #060317;
-  --surface-raised: #0a0621;
-  --surface-soft: #0d0828;
-  --lavender: #9382ff;
-  --iris: #5046e4;
-  --lilac-white: #f4f1ff;
-  --text-primary: #f2eeff;
-  --text-secondary: #a8a2c4;
-  --text-tertiary: #7b749c;
-  --border: rgba(147, 130, 255, 0.12);
-  --border-strong: rgba(147, 130, 255, 0.24);
-  --border-soft: rgba(255, 255, 255, 0.06);
-  --gradient-cosmic: linear-gradient(100deg, #e59cff 0%, #ba9cff 48%, #9cb2ff 100%);
-  --radius-button: 5px;
-  --radius-card: 16px;
+  /* Motiveva brand palette */
+  --motiveva-ivory: #f5f4ed;
+  --motiveva-sage: #dce6d9;
+  --motiveva-soft-green: #a8bda6;
+  --motiveva-forest: #52715b;
+  --motiveva-deep-forest: #263d30;
+  --motiveva-sand: #b89c78;
+  --motiveva-paper: #fbfaf4;
+  --motiveva-sage-soft: #edf2ea;
+  --motiveva-danger: #9b4b3f;
+  --motiveva-danger-soft: #f4e5df;
+  --motiveva-danger-border: rgba(155, 75, 63, 0.28);
+
+  /* Semantic tokens */
+  --void: var(--motiveva-ivory);
+  --surface: var(--motiveva-paper);
+  --surface-raised: #ffffff;
+  --surface-soft: var(--motiveva-sage-soft);
+  --lavender: var(--motiveva-forest);
+  --iris: var(--motiveva-deep-forest);
+  --lilac-white: var(--motiveva-ivory);
+  --text-primary: #263d30;
+  --text-secondary: #4f6655;
+  --text-tertiary: #5e7163;
+  --border: rgba(38, 61, 48, 0.14);
+  --border-strong: rgba(38, 61, 48, 0.26);
+  --border-soft: rgba(38, 61, 48, 0.08);
+  --gradient-brand: linear-gradient(100deg, #52715b 0%, #a8bda6 52%, #b89c78 100%);
+  --radius-button: 8px;
+  --radius-card: 18px;
   --radius-badge: 32px;
   --radius-nav: 999px;
-  --font-display: var(--font-dm-sans), "DM Sans", -apple-system, BlinkMacSystemFont,
+  --font-display: var(--font-manrope), "Manrope", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
   --font-body: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont,
     "Segoe UI", sans-serif;
@@ -37,7 +51,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
   scroll-padding-top: 110px;
   -webkit-text-size-adjust: 100%;
@@ -48,8 +62,8 @@ body {
   min-height: 100dvh;
   background-color: var(--void);
   background-image:
-    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(80, 70, 228, 0.16), transparent 68%),
-    radial-gradient(ellipse 60% 40% at 100% 40%, rgba(147, 130, 255, 0.05), transparent 70%);
+    radial-gradient(ellipse 90% 55% at 50% -12%, rgba(168, 189, 166, 0.42), transparent 68%),
+    radial-gradient(ellipse 60% 40% at 100% 40%, rgba(184, 156, 120, 0.1), transparent 70%);
   background-repeat: no-repeat;
   color: var(--text-primary);
   font-family: var(--font-body);
@@ -125,8 +139,8 @@ kbd {
 }
 
 ::selection {
-  background: rgba(147, 130, 255, 0.36);
-  color: #ffffff;
+  background: rgba(82, 113, 91, 0.24);
+  color: #263d30;
 }
 
 :focus-visible {
@@ -145,13 +159,13 @@ kbd {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(147, 130, 255, 0.16);
+  background: rgba(82, 113, 91, 0.28);
   border: 3px solid var(--void);
   border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(147, 130, 255, 0.3);
+  background: rgba(82, 113, 91, 0.46);
 }
 
 /* ── Utilities ─────────────────────────────────────────────────────────── */
@@ -193,7 +207,7 @@ kbd {
 }
 
 .gradient-text {
-  background: var(--gradient-cosmic);
+  background: var(--gradient-brand);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -214,7 +228,7 @@ kbd {
 }
 
 .text-link:hover {
-  color: var(--lilac-white);
+  color: var(--iris);
 }
 
 .eyebrow {
@@ -234,7 +248,7 @@ kbd {
   height: 5px;
   border-radius: 999px;
   background: var(--lavender);
-  box-shadow: 0 0 0 3px rgba(147, 130, 255, 0.14);
+  box-shadow: 0 0 0 3px rgba(82, 113, 91, 0.14);
 }
 
 /* ── Buttons ───────────────────────────────────────────────────────────── */
@@ -282,44 +296,44 @@ kbd {
   color: var(--lilac-white);
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.18),
-    inset 0 0 0 1px rgba(147, 130, 255, 0.3);
+    inset 0 0 0 1px rgba(82, 113, 91, 0.3);
 }
 
 .btn-primary:hover {
-  background: #5b50f0;
+  background: var(--motiveva-forest);
 }
 
 .btn-ghost {
-  background: rgba(6, 3, 23, 0.5);
+  background: rgba(255, 255, 255, 0.5);
   border-color: var(--border-strong);
   color: var(--text-primary);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .btn-ghost:hover {
-  background: rgba(147, 130, 255, 0.08);
-  border-color: rgba(147, 130, 255, 0.36);
+  background: rgba(82, 113, 91, 0.08);
+  border-color: rgba(82, 113, 91, 0.36);
 }
 
 .btn-danger-soft {
-  background: rgba(147, 130, 255, 0.06);
-  border-color: rgba(147, 130, 255, 0.2);
-  color: #cfc6ff;
+  background: rgba(155, 75, 63, 0.06);
+  border-color: rgba(155, 75, 63, 0.2);
+  color: #8b3f36;
 }
 
 .btn-danger-soft:hover {
-  background: rgba(229, 156, 255, 0.1);
-  border-color: rgba(229, 156, 255, 0.32);
+  background: rgba(155, 75, 63, 0.12);
+  border-color: rgba(155, 75, 63, 0.32);
 }
 
 .btn-danger {
-  background: rgba(229, 156, 255, 0.16);
-  border-color: rgba(229, 156, 255, 0.34);
-  color: var(--lilac-white);
+  background: rgba(155, 75, 63, 0.12);
+  border-color: rgba(155, 75, 63, 0.3);
+  color: #7c352d;
 }
 
 .btn-danger:hover {
-  background: rgba(229, 156, 255, 0.24);
+  background: rgba(155, 75, 63, 0.18);
 }
 
 .icon-btn {
@@ -338,7 +352,7 @@ kbd {
 }
 
 .icon-btn:hover {
-  background: rgba(147, 130, 255, 0.1);
+  background: rgba(82, 113, 91, 0.1);
   border-color: var(--border);
   color: var(--text-primary);
 }
@@ -348,7 +362,7 @@ kbd {
 }
 
 .icon-btn-ghost:hover {
-  color: #e2b7ff;
+  color: var(--motiveva-danger);
 }
 
 .btn:disabled,
@@ -392,7 +406,7 @@ kbd {
   padding: 9px 12px;
   border: 1px solid var(--border);
   border-radius: 8px;
-  background: rgba(3, 0, 20, 0.6);
+  background: rgba(255, 255, 255, 0.6);
   color: var(--text-primary);
   font-size: 0.88rem;
   transition:
@@ -410,9 +424,9 @@ kbd {
 
 .form-control:focus {
   outline: none;
-  border-color: rgba(147, 130, 255, 0.55);
-  background: rgba(10, 6, 33, 0.7);
-  box-shadow: inset 0 0 0 1px rgba(147, 130, 255, 0.2);
+  border-color: rgba(82, 113, 91, 0.55);
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(82, 113, 91, 0.2);
 }
 
 .form-control:disabled {
@@ -427,7 +441,7 @@ textarea.form-control {
 
 .form-error {
   font-size: 0.78rem;
-  color: #e2b7ff;
+  color: var(--motiveva-danger);
 }
 
 .select-wrap {
@@ -460,7 +474,7 @@ textarea.form-control {
   padding: 0 8px;
   border-radius: var(--radius-badge);
   border: 1px solid var(--border);
-  background: rgba(147, 130, 255, 0.05);
+  background: rgba(82, 113, 91, 0.05);
   color: var(--text-secondary);
   font-size: 0.68rem;
   font-weight: 400;
@@ -469,9 +483,9 @@ textarea.form-control {
 }
 
 .tag-category {
-  color: #c9c0ff;
-  border-color: rgba(147, 130, 255, 0.2);
-  background: rgba(147, 130, 255, 0.08);
+  color: var(--motiveva-forest);
+  border-color: rgba(82, 113, 91, 0.24);
+  background: rgba(220, 230, 217, 0.62);
 }
 
 .tag-custom {
@@ -489,44 +503,46 @@ textarea.form-control {
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   flex-shrink: 0;
+  color: var(--text-primary);
 }
 
 .brand-mark {
   display: grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
-  border-radius: 10px;
-  background:
-    radial-gradient(circle at 30% 20%, rgba(229, 156, 255, 0.18), transparent 60%),
-    rgba(147, 130, 255, 0.06);
-  border: 1px solid rgba(147, 130, 255, 0.2);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  width: 40px;
+  height: 28px;
+  flex-shrink: 0;
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
-  gap: 1px;
+.brand-mark svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.brand-symbol {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 10px;
+}
+
+.brand-symbol svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
 }
 
 .brand-name {
   font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  color: var(--text-primary);
-  line-height: 1.2;
-}
-
-.brand-sub {
-  font-size: 0.61rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--text-tertiary);
-  line-height: 1.2;
+  font-size: 1.22rem;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  color: currentColor;
+  line-height: 1;
 }
 
 /* ── Decorative fields ─────────────────────────────────────────────────── */
@@ -541,23 +557,23 @@ textarea.form-control {
 
 .star-field {
   background-image:
-    radial-gradient(1.5px 1.5px at 8% 18%, rgba(255, 255, 255, 0.55), transparent),
-    radial-gradient(1px 1px at 16% 42%, rgba(255, 255, 255, 0.45), transparent),
-    radial-gradient(1.5px 1.5px at 27% 12%, rgba(229, 156, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 38% 30%, rgba(255, 255, 255, 0.4), transparent),
-    radial-gradient(1.5px 1.5px at 48% 8%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 56% 22%, rgba(156, 178, 255, 0.5), transparent),
-    radial-gradient(1px 1px at 66% 14%, rgba(255, 255, 255, 0.4), transparent),
-    radial-gradient(1.5px 1.5px at 76% 34%, rgba(229, 156, 255, 0.4), transparent),
-    radial-gradient(1px 1px at 86% 16%, rgba(255, 255, 255, 0.5), transparent),
-    radial-gradient(1.5px 1.5px at 94% 40%, rgba(255, 255, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 12% 70%, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(1px 1px at 32% 62%, rgba(156, 178, 255, 0.4), transparent),
-    radial-gradient(1.5px 1.5px at 52% 76%, rgba(255, 255, 255, 0.3), transparent),
-    radial-gradient(1px 1px at 72% 66%, rgba(255, 255, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 92% 78%, rgba(229, 156, 255, 0.35), transparent),
-    radial-gradient(1px 1px at 22% 88%, rgba(255, 255, 255, 0.3), transparent);
-  opacity: 0.75;
+    radial-gradient(1.5px 1.5px at 8% 18%, rgba(82, 113, 91, 0.34), transparent),
+    radial-gradient(1px 1px at 16% 42%, rgba(168, 189, 166, 0.42), transparent),
+    radial-gradient(1.5px 1.5px at 27% 12%, rgba(184, 156, 120, 0.38), transparent),
+    radial-gradient(1px 1px at 38% 30%, rgba(82, 113, 91, 0.24), transparent),
+    radial-gradient(1.5px 1.5px at 48% 8%, rgba(168, 189, 166, 0.36), transparent),
+    radial-gradient(1px 1px at 56% 22%, rgba(82, 113, 91, 0.3), transparent),
+    radial-gradient(1px 1px at 66% 14%, rgba(184, 156, 120, 0.28), transparent),
+    radial-gradient(1.5px 1.5px at 76% 34%, rgba(82, 113, 91, 0.22), transparent),
+    radial-gradient(1px 1px at 86% 16%, rgba(168, 189, 166, 0.34), transparent),
+    radial-gradient(1.5px 1.5px at 94% 40%, rgba(184, 156, 120, 0.24), transparent),
+    radial-gradient(1px 1px at 12% 70%, rgba(82, 113, 91, 0.18), transparent),
+    radial-gradient(1px 1px at 32% 62%, rgba(168, 189, 166, 0.28), transparent),
+    radial-gradient(1.5px 1.5px at 52% 76%, rgba(82, 113, 91, 0.16), transparent),
+    radial-gradient(1px 1px at 72% 66%, rgba(184, 156, 120, 0.2), transparent),
+    radial-gradient(1px 1px at 92% 78%, rgba(82, 113, 91, 0.18), transparent),
+    radial-gradient(1px 1px at 22% 88%, rgba(168, 189, 166, 0.24), transparent);
+  opacity: 0.6;
   mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.95), transparent 92%);
 }
 
@@ -568,14 +584,14 @@ textarea.form-control {
   width: 70%;
   height: 70%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(80, 70, 228, 0.18), transparent 65%);
+  background: radial-gradient(circle, rgba(168, 189, 166, 0.34), transparent 65%);
 }
 
 .aurora {
   background:
-    radial-gradient(ellipse 38% 42% at 18% 24%, rgba(147, 130, 255, 0.12), transparent 68%),
-    radial-gradient(ellipse 42% 36% at 82% 18%, rgba(229, 156, 255, 0.08), transparent 70%),
-    radial-gradient(ellipse 50% 34% at 50% 92%, rgba(80, 70, 228, 0.1), transparent 72%);
+    radial-gradient(ellipse 38% 42% at 18% 24%, rgba(168, 189, 166, 0.28), transparent 68%),
+    radial-gradient(ellipse 42% 36% at 82% 18%, rgba(184, 156, 120, 0.14), transparent 70%),
+    radial-gradient(ellipse 50% 34% at 50% 92%, rgba(220, 230, 217, 0.36), transparent 72%);
   filter: blur(6px);
 }
 
@@ -600,7 +616,7 @@ textarea.form-control {
   height: 22px;
   border-radius: 999px;
   border: 1px solid var(--border-strong);
-  background: rgba(3, 0, 20, 0.7);
+  background: rgba(255, 255, 255, 0.7);
   transition:
     background-color 0.24s var(--ease),
     border-color 0.24s var(--ease);
@@ -621,8 +637,8 @@ textarea.form-control {
 }
 
 .toggle input:checked + .toggle-track {
-  background: rgba(80, 70, 228, 0.55);
-  border-color: rgba(147, 130, 255, 0.55);
+  background: rgba(38, 61, 48, 0.55);
+  border-color: rgba(82, 113, 91, 0.55);
 }
 
 .toggle input:checked + .toggle-track .toggle-thumb {
@@ -645,10 +661,10 @@ textarea.form-control {
 .panel {
   border: 1px solid var(--border);
   border-radius: var(--radius-card);
-  background: linear-gradient(165deg, rgba(10, 6, 33, 0.72), rgba(6, 3, 23, 0.92));
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.92));
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.045),
-    inset 0 0 60px rgba(80, 70, 228, 0.05);
+    inset 0 0 60px rgba(38, 61, 48, 0.05);
   overflow: hidden;
 }
 
@@ -667,7 +683,7 @@ textarea.form-control {
   height: 28px;
   border-radius: 8px;
   border: 1px solid var(--border);
-  background: rgba(147, 130, 255, 0.07);
+  background: rgba(82, 113, 91, 0.07);
   color: var(--lavender);
 }
 
@@ -696,7 +712,7 @@ textarea.form-control {
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(3, 0, 20, 0.78);
+  background: rgba(38, 61, 48, 0.38);
   backdrop-filter: blur(10px);
   animation: overlay-in 0.22s var(--ease);
 }
@@ -711,11 +727,11 @@ textarea.form-control {
   border: 1px solid var(--border-strong);
   border-radius: var(--radius-card);
   background:
-    radial-gradient(ellipse 120% 50% at 50% -20%, rgba(147, 130, 255, 0.1), transparent 70%),
-    linear-gradient(180deg, #0a0621, #060317);
+    radial-gradient(ellipse 120% 50% at 50% -20%, rgba(168, 189, 166, 0.2), transparent 70%),
+    linear-gradient(180deg, #ffffff, #f5f4ed);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.07),
-    inset 0 0 90px rgba(80, 70, 228, 0.06);
+    0 30px 80px rgba(38, 61, 48, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
   animation: modal-in 0.28s var(--ease);
 }
 
@@ -738,7 +754,7 @@ textarea.form-control {
   height: 40px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: rgba(147, 130, 255, 0.08);
+  background: rgba(82, 113, 91, 0.08);
   font-size: 1.1rem;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
@@ -777,7 +793,7 @@ textarea.form-control {
   gap: 10px;
   padding: 16px 22px 20px;
   border-top: 1px solid var(--border);
-  background: rgba(6, 3, 23, 0.94);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(16px);
 }
 
@@ -824,8 +840,10 @@ textarea.form-control {
   padding: 11px 12px;
   border: 1px solid var(--border-strong);
   border-radius: 10px;
-  background: rgba(10, 6, 33, 0.96);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow:
+    0 18px 40px rgba(38, 61, 48, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
   animation: toast-in 0.28s var(--ease);
   pointer-events: auto;
 }
@@ -837,19 +855,19 @@ textarea.form-control {
   width: 26px;
   height: 26px;
   border-radius: 7px;
-  background: rgba(147, 130, 255, 0.1);
+  background: rgba(82, 113, 91, 0.1);
   color: var(--lavender);
 }
 
 .toast-success .toast-icon {
-  color: #d8c9ff;
-  background: rgba(147, 130, 255, 0.16);
+  color: #2f5a3e;
+  background: rgba(168, 189, 166, 0.3);
 }
 
 .toast-warning .toast-icon,
 .toast-error .toast-icon {
-  color: #e9c4ff;
-  background: rgba(229, 156, 255, 0.12);
+  color: var(--motiveva-danger);
+  background: var(--motiveva-danger-soft);
 }
 
 .toast-message {
@@ -862,14 +880,14 @@ textarea.form-control {
   flex-shrink: 0;
   padding: 4px 8px;
   border-radius: 4px;
-  border: 1px solid rgba(147, 130, 255, 0.28);
+  border: 1px solid rgba(82, 113, 91, 0.28);
   color: var(--lavender);
   font-size: 0.74rem;
   font-weight: 500;
 }
 
 .toast-action:hover {
-  background: rgba(147, 130, 255, 0.1);
+  background: rgba(82, 113, 91, 0.1);
 }
 
 .toast-close {
@@ -884,7 +902,7 @@ textarea.form-control {
 
 .toast-close:hover {
   color: var(--text-primary);
-  background: rgba(147, 130, 255, 0.1);
+  background: rgba(82, 113, 91, 0.1);
 }
 
 @keyframes toast-in {

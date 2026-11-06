@@ -132,7 +132,7 @@ export function TodayView({
           }
           description={
             active.length === 0 && archivedCount > 0
-              ? "Restaura los que quieras retomar y vuelve a la órbita."
+              ? "Restaura los que quieras retomar y vuelve a tu ritmo."
               : "Crea tu primer hábito y empieza con algo pequeño."
           }
           action={

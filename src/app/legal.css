@@ -8,7 +8,8 @@
   padding: 158px 0 64px;
   border-bottom: 1px solid var(--border);
   background:
-    radial-gradient(ellipse 70% 80% at 50% -20%, rgba(80, 70, 228, 0.16), transparent 70%);
+    radial-gradient(ellipse 70% 80% at 50% -20%, rgba(168, 189, 166, 0.4), transparent 70%),
+    radial-gradient(ellipse 50% 60% at 100% 40%, rgba(184, 156, 120, 0.1), transparent 72%);
 }
 
 .legal-stars {
@@ -107,7 +108,7 @@
 }
 
 .legal-toc a:hover {
-  color: var(--lilac-white);
+  color: var(--text-primary);
   border-left-color: var(--lavender);
 }
 
@@ -118,7 +119,7 @@
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: rgba(147, 130, 255, 0.04);
+  background: rgba(82, 113, 91, 0.04);
 }
 
 .legal-toc-help svg {
@@ -211,21 +212,21 @@
 .legal-body a {
   color: var(--lavender);
   text-decoration: underline;
-  text-decoration-color: rgba(147, 130, 255, 0.35);
+  text-decoration-color: rgba(82, 113, 91, 0.35);
   text-underline-offset: 3px;
   transition: color 0.2s var(--ease);
 }
 
 .legal-body a:hover {
-  color: var(--lilac-white);
+  color: var(--iris);
 }
 
 .legal-body code {
   padding: 1px 5px;
   border: 1px solid var(--border);
   border-radius: 4px;
-  background: rgba(147, 130, 255, 0.06);
-  color: #cdc4ff;
+  background: rgba(220, 230, 217, 0.6);
+  color: var(--motiveva-forest);
   font-size: 0.82em;
 }
 
@@ -237,8 +238,9 @@
   border: 1px solid var(--border-strong);
   border-radius: 12px;
   background:
-    radial-gradient(ellipse 90% 120% at 0% 0%, rgba(147, 130, 255, 0.09), transparent 65%),
-    rgba(10, 6, 33, 0.5);
+    radial-gradient(ellipse 90% 120% at 0% 0%, rgba(168, 189, 166, 0.24), transparent 65%),
+    rgba(255, 255, 255, 0.78);
+  box-shadow: 0 16px 40px rgba(38, 61, 48, 0.04);
 }
 
 .legal-callout svg {
@@ -261,7 +263,7 @@
   padding: 18px;
   border: 1px solid var(--border);
   border-radius: 12px;
-  background: rgba(6, 3, 23, 0.6);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .legal-contact-icon {
@@ -271,7 +273,7 @@
   height: 38px;
   border: 1px solid var(--border);
   border-radius: 10px;
-  background: rgba(147, 130, 255, 0.07);
+  background: rgba(82, 113, 91, 0.07);
   color: var(--lavender);
 }
 

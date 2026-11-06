@@ -41,7 +41,7 @@ export function ProductPreview() {
 
       <div className="preview-body">
         <aside className="preview-side">
-          <Brand href={undefined} compact subtitle={false} />
+          <Brand href={undefined} compact />
           <div className="preview-nav">
             {miniNav.map((item) => (
               <div

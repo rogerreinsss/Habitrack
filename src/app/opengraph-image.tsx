@@ -1,24 +1,12 @@
 import { ImageResponse } from "next/og";
+import { BRAND_COLORS, RIBBON_PATHS } from "@/lib/brand";
 
 export const alt =
   "Motiveva — Tu mejor versión, sin ruido. Seguidor de hábitos local-first.";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const STARS = [
-  { left: 120, top: 96, size: 3, opacity: 0.5 },
-  { left: 310, top: 170, size: 2, opacity: 0.35 },
-  { left: 520, top: 82, size: 2, opacity: 0.45 },
-  { left: 880, top: 120, size: 3, opacity: 0.55 },
-  { left: 1040, top: 210, size: 2, opacity: 0.4 },
-  { left: 740, top: 250, size: 2, opacity: 0.3 },
-  { left: 180, top: 400, size: 2, opacity: 0.3 },
-  { left: 420, top: 470, size: 3, opacity: 0.35 },
-  { left: 980, top: 430, size: 2, opacity: 0.4 },
-  { left: 1110, top: 90, size: 2, opacity: 0.5 },
-  { left: 60, top: 230, size: 2, opacity: 0.4 },
-  { left: 640, top: 520, size: 2, opacity: 0.3 },
-];
+const CHIPS = ["Local-first", "Cuenta opcional", "Sin anuncios", "Gratis"];
 
 export default function OpenGraphImage() {
   return new ImageResponse(
@@ -32,128 +20,170 @@ export default function OpenGraphImage() {
           justifyContent: "space-between",
           position: "relative",
           overflow: "hidden",
-          backgroundColor: "#030014",
+          backgroundColor: BRAND_COLORS.ivory,
           backgroundImage:
-            "radial-gradient(circle at 82% 12%, rgba(147,130,255,0.30), transparent 45%), radial-gradient(circle at 12% 96%, rgba(80,70,228,0.24), transparent 50%)",
-          color: "#f4f1ff",
+            "radial-gradient(circle at 90% 8%, rgba(220,230,217,0.9), transparent 52%), radial-gradient(circle at 10% 100%, rgba(184,156,120,0.16), transparent 48%)",
+          color: BRAND_COLORS.deepForest,
           fontFamily: "sans-serif",
-          padding: "66px 80px",
+          padding: "62px 76px",
         }}
       >
-        {STARS.map((star, index) => (
-          <div
-            key={index}
-            style={{
-              position: "absolute",
-              left: star.left,
-              top: star.top,
-              width: star.size,
-              height: star.size,
-              borderRadius: 999,
-              backgroundColor: "#d9d2ff",
-              opacity: star.opacity,
-            }}
-          />
-        ))}
+        <div
+          style={{
+            position: "absolute",
+            right: -150,
+            top: -190,
+            width: 540,
+            height: 540,
+            borderRadius: 999,
+            backgroundColor: "rgba(168,189,166,0.22)",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            right: 180,
+            bottom: -170,
+            width: 360,
+            height: 360,
+            borderRadius: 999,
+            backgroundColor: "rgba(184,156,120,0.12)",
+          }}
+        />
 
-        <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            gap: 14,
+          }}
+        >
+          <svg width="92" height="40" viewBox="0 0 324 140">
+            <defs>
+              <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stopColor={BRAND_COLORS.softGreen} />
+                <stop offset="0.52" stopColor={BRAND_COLORS.sage} />
+                <stop offset="1" stopColor={BRAND_COLORS.softGreen} />
+              </linearGradient>
+            </defs>
+            <path d={RIBBON_PATHS.main} fill="url(#ribbon)" />
+            <path d={RIBBON_PATHS.upright} fill={BRAND_COLORS.softGreen} />
+          </svg>
           <div
             style={{
-              width: 54,
-              height: 54,
+              display: "flex",
+              fontSize: 34,
+              fontWeight: 700,
+              letterSpacing: -1.8,
+              lineHeight: 1,
+            }}
+          >
+            motiveva
+          </div>
+        </div>
+
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 56,
+          }}
+        >
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 22,
+              maxWidth: 720,
+            }}
+          >
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                fontSize: 78,
+                fontWeight: 600,
+                lineHeight: 1.04,
+                letterSpacing: -3.6,
+              }}
+            >
+              <span>Tu mejor versión,</span>
+              <span style={{ color: BRAND_COLORS.forest }}>sin ruido.</span>
+            </div>
+            <div
+              style={{
+                fontSize: 26,
+                lineHeight: 1.4,
+                color: BRAND_COLORS.forest,
+                maxWidth: 650,
+              }}
+            >
+              Rachas honestas, estadísticas claras y tus datos bajo tu control.
+            </div>
+          </div>
+
+          <div
+            style={{
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
-              borderRadius: 16,
-              backgroundImage:
-                "linear-gradient(135deg, rgba(229,156,255,0.22), rgba(147,130,255,0.12))",
-              border: "1px solid rgba(147,130,255,0.34)",
-              color: "#f4f1ff",
-              fontSize: 26,
+              flexShrink: 0,
+              width: 210,
+              height: 210,
+              borderRadius: 52,
+              backgroundColor: BRAND_COLORS.deepForest,
+              boxShadow: "0 24px 60px rgba(38,61,48,0.18)",
             }}
           >
-            <svg
-              width="28"
-              height="28"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="#f4f1ff"
-              strokeWidth="2.1"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M20 6 9 17l-5-5" />
+            <svg width="152" height="66" viewBox="0 0 324 140">
+              <defs>
+                <linearGradient id="ribbon-tile" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stopColor={BRAND_COLORS.sage} />
+                  <stop offset="0.52" stopColor={BRAND_COLORS.softGreen} />
+                  <stop offset="1" stopColor={BRAND_COLORS.sage} />
+                </linearGradient>
+              </defs>
+              <path d={RIBBON_PATHS.main} fill="url(#ribbon-tile)" />
+              <path d={RIBBON_PATHS.upright} fill={BRAND_COLORS.sage} />
             </svg>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 2,
-            }}
-          >
-            <div style={{ fontSize: 26, fontWeight: 500, letterSpacing: -0.4 }}>
-              Motiveva
-            </div>
-            <div style={{ fontSize: 15, color: "#8b84ad", letterSpacing: 0.4 }}>
-              Tu mejor versión
-            </div>
-          </div>
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              fontSize: 78,
-              fontWeight: 500,
-              lineHeight: 1.04,
-              letterSpacing: -3,
-            }}
-          >
-            <span>Tu mejor versión,</span>
-            <span style={{ color: "#b9a8ff" }}>sin ruido.</span>
-          </div>
-          <div
-            style={{
-              fontSize: 26,
-              lineHeight: 1.4,
-              color: "#a8a2c4",
-              maxWidth: 760,
-            }}
-          >
-            Rachas honestas, estadísticas claras y tus datos bajo tu control.
-          </div>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-          {["Local-first", "Cuenta opcional", "Sin anuncios", "Gratis"].map(
-            (chip) => (
-              <div
-                key={chip}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  padding: "10px 20px",
-                  borderRadius: 999,
-                  border: "1px solid rgba(147,130,255,0.22)",
-                  backgroundColor: "rgba(6,3,23,0.72)",
-                  color: "#c9c3e6",
-                  fontSize: 18,
-                }}
-              >
-                {chip}
-              </div>
-            ),
-          )}
+        <div
+          style={{
+            position: "relative",
+            display: "flex",
+            alignItems: "center",
+            gap: 12,
+          }}
+        >
+          {CHIPS.map((chip) => (
+            <div
+              key={chip}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                padding: "10px 20px",
+                borderRadius: 999,
+                border: "1px solid rgba(82,113,91,0.2)",
+                backgroundColor: "rgba(220,230,217,0.58)",
+                color: BRAND_COLORS.deepForest,
+                fontSize: 18,
+              }}
+            >
+              {chip}
+            </div>
+          ))}
           <div
             style={{
               display: "flex",
               marginLeft: "auto",
-              color: "#8b84ad",
+              color: BRAND_COLORS.forest,
               fontSize: 18,
-              letterSpacing: 0.5,
+              letterSpacing: 0.4,
             }}
           >
             motiveva.vercel.app

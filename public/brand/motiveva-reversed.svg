@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="240" viewBox="0 0 1100 240" role="img" aria-label="Logotipo Motiveva">
+<rect width="1100" height="240" fill="#263D30"/>
+<g transform="translate(20 48) scale(0.92 0.92)">
+<defs>
+  <linearGradient id="ribbon" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0" stop-color="#DCE6D9"/>
+    <stop offset="0.52" stop-color="#A8BDA6"/>
+    <stop offset="1" stop-color="#DCE6D9"/>
+  </linearGradient>
+</defs>
+<!-- Left rise, central dip and second rise -->
+<path d="M8 112
+ C27 112 39 108 51 96
+ C66 81 78 57 91 39
+ C105 19 125 16 143 29
+ C157 39 170 62 184 77
+ C193 87 202 88 211 78
+ C222 65 232 42 246 23
+ C259 6 278 0 297 5
+ C307 8 313 14 316 23
+ C293 26 278 44 265 64
+ C251 86 237 111 216 119
+ C197 127 181 115 166 98
+ C153 83 140 63 127 55
+ C117 49 108 54 99 66
+ C85 85 73 106 55 119
+ C41 129 25 132 8 132 Z"
+ fill="url(#ribbon)"/>
+<!-- Right upright, with the softly rounded lower-right corner -->
+<path d="M268 66
+ C279 51 292 39 316 31
+ L316 112
+ C316 122 310 128 300 128
+ L268 128 Z"
+ fill="#DCE6D9"/>
+</g>
+<text x="355" y="166" fill="#F5F4ED" font-family="Manrope, Inter, Arial, sans-serif"
+ font-size="112" font-weight="600" letter-spacing="-5">motiveva</text>
+</svg>

@@ -38,7 +38,7 @@ export function Topbar({ view, onSearch, onNew }: TopbarProps) {
   return (
     <header className="topbar">
       <div className="topbar-mobile-brand">
-        <Brand href="/" compact subtitle={false} />
+        <Brand href="/" compact />
       </div>
 
       <div className="topbar-left">

@@ -5,6 +5,7 @@ import { MarketingNav } from "@/components/marketing/MarketingNav";
 import { ProductPreview } from "@/components/marketing/ProductPreview";
 import { Faq } from "@/components/marketing/Faq";
 import { SiteFooter } from "@/components/marketing/SiteFooter";
+import { BrandSymbol } from "@/components/ui/Brand";
 import { Aurora, StarField } from "@/components/ui/Decor";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { FAQ_ITEMS } from "@/lib/faq";
@@ -342,8 +343,8 @@ export default async function HomePage() {
         <section className="section final-cta" aria-labelledby="cta-title">
           <StarField className="cta-stars" />
           <div className="container final-cta-inner">
-            <span className="final-mark" aria-hidden="true">
-              ✦
+            <span className="final-mark">
+              <BrandSymbol />
             </span>
             <h2 className="final-title" id="cta-title">
               Empieza con algo

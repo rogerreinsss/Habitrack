@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
-import { DM_Sans, Inter } from "next/font/google";
+import { Inter, Manrope } from "next/font/google";
 import {
   CONTACT_EMAIL,
   SITE_DESCRIPTION,
@@ -17,10 +17,10 @@ import "./app-stats.css";
 import "./modals.css";
 import "./auth.css";
 
-const display = DM_Sans({
+const display = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500"],
-  variable: "--font-dm-sans",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-manrope",
   display: "swap",
   preload: true,
 });
@@ -88,7 +88,7 @@ export const metadata: Metadata = {
   appleWebApp: {
     capable: true,
     title: SITE_NAME,
-    statusBarStyle: "black-translucent",
+    statusBarStyle: "default",
   },
   referrer: "strict-origin-when-cross-origin",
   other: {
@@ -100,8 +100,8 @@ export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
   viewportFit: "cover",
-  colorScheme: "dark",
-  themeColor: "#030014",
+  colorScheme: "light",
+  themeColor: "#F5F4ED",
 };
 
 export default async function RootLayout({

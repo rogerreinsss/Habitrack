@@ -14,6 +14,7 @@ import { TodayView } from "@/components/app/views/TodayView";
 import { HabitsView } from "@/components/app/views/HabitsView";
 import { StatsView } from "@/components/app/views/StatsView";
 import { SettingsView } from "@/components/app/views/SettingsView";
+import { BrandSymbol } from "@/components/ui/Brand";
 import { readImportFile } from "@/lib/export";
 import { MOTION_KEY, readPreference } from "@/lib/storage";
 import type { Habit, ImportedData, View } from "@/lib/types";
@@ -142,8 +143,8 @@ export function HabitApp() {
   if (!hydrated) {
     return (
       <div className="app-loading" aria-live="polite">
-        <span className="app-loading-mark" aria-hidden="true">
-          ✦
+        <span className="app-loading-mark">
+          <BrandSymbol />
         </span>
         <span>Cargando tu espacio…</span>
       </div>

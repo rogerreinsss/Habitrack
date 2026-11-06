@@ -25,7 +25,7 @@ export function MarketingNav() {
   return (
     <header className="marketing-nav-wrap">
       <nav className="nav-pill" aria-label="Navegación principal">
-        <Brand href="/" subtitle={false} />
+        <Brand href="/" />
 
         <div className="nav-links">
           {NAV_LINKS.map((link) => (
