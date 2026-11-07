@@ -33,7 +33,7 @@ export function ProductPreview() {
           <i />
           <i />
         </span>
-        <span className="preview-url">motiveva.vercel.app/app</span>
+        <span className="preview-url">motiveva.site/app</span>
         <span className="preview-secure">
           <Icon name="lock" size={11} /> local
         </span>

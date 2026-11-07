@@ -1,3 +1,16 @@
+/**
+ * Canonical public origin. Every public URL (canonical, Open Graph, JSON-LD,
+ * sitemap, robots, auth redirects) is built from this value.
+ */
+export const CANONICAL_ORIGIN = "https://motiveva.site";
+
+/**
+ * Hosts that must never be used as the public identity. The Vercel deployment
+ * domain still exists for the platform, but links should always point to the
+ * canonical domain.
+ */
+const LEGACY_ORIGINS = new Set(["https://motiveva.vercel.app"]);
+
 function safeUrl(value: string | undefined, fallback: string): string {
   if (!value) return fallback;
   try {
@@ -5,7 +18,9 @@ function safeUrl(value: string | undefined, fallback: string): string {
     if (parsed.protocol !== "https:" && parsed.protocol !== "http:") {
       return fallback;
     }
-    return parsed.origin.replace(/\/$/, "");
+    const origin = parsed.origin.replace(/\/$/, "");
+    if (LEGACY_ORIGINS.has(origin)) return fallback;
+    return origin;
   } catch {
     return fallback;
   }
@@ -13,8 +28,23 @@ function safeUrl(value: string | undefined, fallback: string): string {
 
 export const SITE_URL = safeUrl(
   process.env.NEXT_PUBLIC_SITE_URL,
-  "https://motiveva.vercel.app",
+  CANONICAL_ORIGIN,
 );
+
+/**
+ * Absolute URL for Supabase auth emails and redirects. Production always uses
+ * the canonical domain so no auth link can point at the technical deployment
+ * host; local development keeps using the current origin.
+ */
+export function authRedirectUrl(path: string): string {
+  const base =
+    process.env.NODE_ENV === "production"
+      ? SITE_URL
+      : typeof window !== "undefined"
+        ? window.location.origin
+        : SITE_URL;
+  return `${base}${path}`;
+}
 
 export const CONTACT_EMAIL =
   process.env.NEXT_PUBLIC_CONTACT_EMAIL || "privacidad@motiveva.app";

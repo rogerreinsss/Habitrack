@@ -186,7 +186,7 @@ export default function OpenGraphImage() {
               letterSpacing: 0.4,
             }}
           >
-            motiveva.vercel.app
+            motiveva.site
           </div>
         </div>
       </div>

@@ -45,13 +45,13 @@ La app queda disponible en `http://localhost:3000`.
 Crea un `.env.local` (o edita `.env`) partiendo de `.env.example`:
 
 ```bash
-NEXT_PUBLIC_SITE_URL=https://tu-dominio.com
+NEXT_PUBLIC_SITE_URL=https://motiveva.site
 NEXT_PUBLIC_CONTACT_EMAIL=privacidad@tu-dominio.com
 NEXT_PUBLIC_SUPABASE_URL=https://tu-proyecto.supabase.co
 NEXT_PUBLIC_SUPABASE_ANON_KEY=tu-anon-key
 ```
 
-- `NEXT_PUBLIC_SITE_URL`: dominio público sin barra final. Se usa en canonical, Open Graph, Twitter Cards, JSON-LD, `sitemap.xml` y `robots.txt`.
+- `NEXT_PUBLIC_SITE_URL`: dominio público sin barra final. Se usa en canonical, Open Graph, Twitter Cards, JSON-LD, `sitemap.xml`, `robots.txt` y las redirecciones de autenticación. En producción debe ser `https://motiveva.site`; el código descarta el antiguo dominio técnico de Vercel aunque la variable siga apuntando ahí.
 - `NEXT_PUBLIC_CONTACT_EMAIL`: correo que aparece en la política de privacidad y en `/.well-known/security.txt`.
 - `NEXT_PUBLIC_SUPABASE_URL` y `NEXT_PUBLIC_SUPABASE_ANON_KEY`: habilitan el login opcional y la sincronización. Si faltan, la app funciona en local y muestra la sincronización como no disponible.
 
@@ -63,9 +63,9 @@ Ejecuta `supabase/schema.sql` una vez en el SQL Editor del proyecto de Supabase.
 
 En Supabase Auth → URL Configuration, configura:
 
-- **Site URL**: `https://motiveva.vercel.app`
+- **Site URL**: `https://motiveva.site`
 - **Redirect URLs**:
-  - `https://motiveva.vercel.app/**`
+  - `https://motiveva.site/**`
   - `http://localhost:3000/**`
 
 Configuración completa (verificación por código, plantillas de correo,

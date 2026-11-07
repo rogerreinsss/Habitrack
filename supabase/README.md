@@ -18,8 +18,8 @@ Ejecuta `supabase/schema.sql` una vez en el **SQL Editor**. Crea:
 
 | Campo | Valor |
 | --- | --- |
-| Site URL | `https://motiveva.vercel.app` |
-| Redirect URLs | `https://motiveva.vercel.app/**`, `http://localhost:3000/**` |
+| Site URL | `https://motiveva.site` |
+| Redirect URLs | `https://motiveva.site/**`, `http://localhost:3000/**` |
 
 ## 3. Authentication → Sign In / Providers
 

@@ -9,6 +9,7 @@ import {
   type ReactNode,
 } from "react";
 import type { Session, User } from "@supabase/supabase-js";
+import { authRedirectUrl } from "@/lib/site";
 import { getSupabaseClient, isSupabaseConfigured } from "@/lib/supabase";
 
 interface AuthContextValue {
@@ -143,7 +144,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       email: email.trim(),
       password,
       options: {
-        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        emailRedirectTo: authRedirectUrl("/auth/callback"),
       },
     });
 
@@ -183,7 +184,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: authRedirectUrl("/auth/callback"),
         queryParams: {
           access_type: "offline",
           prompt: "consent",
@@ -198,7 +199,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (!supabase) return "La autenticación no está configurada.";
 
     const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
-      redirectTo: `${window.location.origin}/auth/reset`,
+      redirectTo: authRedirectUrl("/auth/reset"),
     });
 
     return error ? translateAuthError(error.message) : null;
