@@ -119,6 +119,12 @@ export default async function HomePage() {
     description: SITE_DESCRIPTION,
     inLanguage: "es",
     isAccessibleForFree: true,
+    publisher: {
+      "@type": "Organization",
+      name: SITE_NAME,
+      url: SITE_URL,
+      logo: `${SITE_URL}/icons/icon-512.png`,
+    },
     offers: {
       "@type": "Offer",
       price: "0",

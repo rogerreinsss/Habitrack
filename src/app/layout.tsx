@@ -83,7 +83,15 @@ export const metadata: Metadata = {
     google: "QaST_y4DFQu2vdVOE7IPA02zdTGDhJytALP1D1KKjbs",
   },
   icons: {
-    icon: [{ url: "/icon.svg", type: "image/svg+xml" }],
+    icon: [
+      { url: "/favicon.ico", sizes: "16x16 32x32 48x48", type: "image/x-icon" },
+      { url: "/icons/icon-48.png", sizes: "48x48", type: "image/png" },
+      { url: "/icons/icon-96.png", sizes: "96x96", type: "image/png" },
+      { url: "/icons/icon-144.png", sizes: "144x144", type: "image/png" },
+      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: "/icons/icon-512.png", sizes: "512x512", type: "image/png" },
+      { url: "/icon.svg", type: "image/svg+xml" },
+    ],
     apple: [{ url: "/apple-icon", sizes: "180x180" }],
   },
   manifest: "/manifest.webmanifest",
@@ -129,7 +137,7 @@ export default async function RootLayout({
       "@type": "Organization",
       name: SITE_NAME,
       url: SITE_URL,
-      logo: `${SITE_URL}/icon.svg`,
+      logo: `${SITE_URL}/icons/icon-512.png`,
       email: CONTACT_EMAIL,
     },
   };
